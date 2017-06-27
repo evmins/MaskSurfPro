@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<f:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+             x:Class="MaskSurfPro.Pages.CountriesPage">
+  <Grid x:Name="CountriesGrid">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="3*" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="3*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="2*" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="10*" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <Label Grid.Column="0" Text="{Binding SelectedCountriesModeLabelText}" x:Name="SelectedCountriesModeLabel" HorizontalOptions="End" VerticalOptions="Center" />
+      <Switch Grid.Column="1" x:Name="CountriesCitiesSwitch" HorizontalOptions="Center" VerticalOptions="Center" Toggled="SwitchToCities" />
+      <Label Grid.Column="2" Text="{Binding SelectedCitiesModeLabelText}" x:Name="SelectedCitiesModeLabel" HorizontalOptions="Start" VerticalOptions="Center" />
+    </Grid>
+    <Button Grid.Row="1" x:Name="GetCountriesListBtn" Clicked="GetCountriesList" Text="{Binding GetCountriesListBtnText}" HorizontalOptions="Center" VerticalOptions="Center" />
+    <Label Grid.Row="2" Text="{Binding WaitLabelText}" x:Name="WaitLabel" IsVisible="False" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+    <ListView Grid.Row="3" x:Name="CountriesToSelect" />
+    <Label Grid.Row="4" Text="{Binding TotalCountriesLabelText}" x:Name="TotalCountriesLabel" HorizontalOptions="Center" VerticalOptions="Center" />
+    <Label Grid.Row="5" Text="{Binding TotalExitRelaysLabelText}" x:Name="TotalExitRelaysLabel" HorizontalOptions="Center" VerticalOptions="Center" />
+    <StackLayout x:Name="RightGrid" Grid.Column="2" Grid.Row="3" Orientation="Vertical">
+      <Label Text="{Binding SelectedCountriesLabelText}" x:Name="SelectedCountriesLabel" />
+      <ListView x:Name="SelectedCountries" HorizontalOptions="Center" VerticalOptions="Center" />
+      <StackLayout Orientation="Horizontal">
+        <Button x:Name="ApplySelectedCountries" Text="{Binding ApplySelectedCountriesText}" HorizontalOptions="Center" VerticalOptions="Center" Clicked="ApplyCountriesList" />
+        <Button x:Name="CancelSelectedCountries" Text="{Binding CancelSelectedCountriesText}" HorizontalOptions="Center" VerticalOptions="Center" Clicked="CancelCountriesList" />
+      </StackLayout>
+    </StackLayout>
+    <Grid Grid.Row="3" Grid.Column="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Button Grid.Row="1" x:Name="AddCountryBtn"  Clicked="AddSelectedCountry" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding AddCountryBtnText}" />
+      <Button Grid.Row="3" x:Name="RemoveCountryBtn" Clicked="RemoveSelectedCountry" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding RemoveCountryBtnText}" />
+    </Grid>
+  </Grid>
+</f:FreshBaseContentPage>

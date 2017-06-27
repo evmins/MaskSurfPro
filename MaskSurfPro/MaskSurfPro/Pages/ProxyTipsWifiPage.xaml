@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<f:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+             x:Class="MaskSurfPro.Pages.ProxyTipsWifiPage">
+  <ScrollView>
+  <StackLayout Spacing="10" Padding="10">
+    <Label x:Name="WifiHeading" Text="{Binding WifiHeadingText}" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" />
+    <Label x:Name="WifiTip1" Text="{Binding WifiTip1Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <Label x:Name="WifiTip2" Text="{Binding WifiTip2Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <Image x:Name="WifiImage1" VerticalOptions="Center" HorizontalOptions="Start" />
+    <Label x:Name="WifiTip3" Text="{Binding WifiTip3Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <Label x:Name="WifiTip4" Text="{Binding WifiTip4Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <Label x:Name="WifiTip5" Text="{Binding WifiTip5Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <Label x:Name="WifiTip6" Text="{Binding WifiTip6Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <Label x:Name="WifiTip7" Text="{Binding WifiTip7Text}" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold" />
+  </StackLayout>
+  </ScrollView>
+</f:FreshBaseContentPage>

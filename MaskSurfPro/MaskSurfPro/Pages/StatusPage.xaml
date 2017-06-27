@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<f:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+             x:Class="MaskSurfPro.Pages.StatusPage">
+  <Grid Padding="10">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="6*" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="13*" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="5*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid Grid.RowSpan="3">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="2*" />
+        <RowDefinition Height="3*" />
+        <RowDefinition Height="11*" />
+        <RowDefinition Height="18*" />
+        <RowDefinition Height="6*" />
+        <RowDefinition Height="8*" />
+      </Grid.RowDefinitions>
+      <Label Grid.Row="0" x:Name="TrueIPDesc" Text="{Binding TrueIPDescription}" />
+      <Label Grid.Row="1" x:Name="TrueIP" />
+      <StackLayout Grid.Row="2" Orientation="Horizontal">
+        <ListView  x:Name="FalseIPList" Header="{Binding FalseIPDesc}" HasUnevenRows="True" VerticalOptions="CenterAndExpand" />
+        <Button  x:Name="TestIPBtn" Text="{Binding TestIPText}" VerticalOptions="Start" HorizontalOptions="Start" Clicked="TestIP" />
+      </StackLayout>
+      <TableView Grid.Row="3" x:Name="ActiveConnections" Intent="Data">
+        <TableRoot>
+          <TableSection x:Name="ActiveConnection" Title="{Binding ActiveConnectionTitle}">
+            <TextCell x:Name="ActiveConName" Text="{Binding ActiveConnectionName}" />
+            <TextCell x:Name="ActiveConProxy" Text="{Binding ActiveConnectionProxy}" />
+            <TextCell x:Name="ActiveConStatus" Text="{Binding ActiveConnectionStatus}" DetailColor="{Binding ConnStatusColor}" />
+          </TableSection>
+        </TableRoot>
+      </TableView>
+      <StackLayout Grid.Row="4" Orientation="Horizontal" VerticalOptions="End">
+        <Button  x:Name="RefreshActiveConnection" Text="{Binding RefreshButtonText}" VerticalOptions="Center" HorizontalOptions="Center" Clicked="Refresh" />
+        <Button x:Name="ShowTipsBtn" Text="?" VerticalOptions="Center" HorizontalOptions="Center" Clicked="ShowTips" />
+      </StackLayout>
+      <Label Grid.Row="5" x:Name="ConnectionStatusDescription" Text="{Binding ConnectionStatusDescriptionText}" VerticalOptions="Start" HorizontalOptions="Center" />
+    </Grid>
+    <Grid Grid.Column="2" x:Name="Logo">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="3*" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Label x:Name="ProgramName" Text="Mask Surf Pro" VerticalOptions="Start" HorizontalOptions="Center" />
+      <Image x:Name="MSPLogo" Grid.Row="1" />
+      <Label Grid.Row="2" x:Name="LoadingMessage" Text="{Binding StartWaitMessageText}" FontAttributes="Bold" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Center" />
+    </Grid>
+    <StackLayout Grid.Row="1" Grid.Column="2" Orientation="Vertical" VerticalOptions="CenterAndExpand">
+      <ListView x:Name="NetworkLog" ItemsSource="{Binding NetworkMessages}" Header="{Binding NetworkStatusTitleText}" />
+    </StackLayout>
+    <StackLayout Grid.Row="2" Grid.Column="2" Orientation="Vertical" VerticalOptions="CenterAndExpand">
+      <ListView x:Name="SelectedRegions" ItemsSource="{Binding selectedRegionsList}" Header="{Binding RegionsLabelText}" HorizontalOptions="Start" VerticalOptions="Center" />
+    </StackLayout>
+    <Grid x:Name="Nav" Grid.Column="4" Grid.RowSpan="2" Padding="20">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Button x:Name="GoToCountries" Text="{Binding GoToCountriesText}"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToCountriesNav" />
+      <Button x:Name="GoToTorLog" Text="{Binding GoToTorLogText}" Grid.Row="1"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToTorLogNav" />
+      <Button x:Name="GoToSettings" Text="{Binding GoToSettingsText}" Grid.Row="2" VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToSettingsNav" />
+      <Button x:Name="GoToAbout" Text="{Binding GoToAboutText}" Grid.Row="3"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToAboutNav" />
+    </Grid>
+    <StackLayout Grid.Row="2" Grid.Column="4" Orientation="Vertical" VerticalOptions="End">
+      <Button x:Name="ResetAllBtn" Text="{Binding ResetAllBtnText}"  VerticalOptions="Start" HorizontalOptions="Center" Clicked="ResetAll" />
+      <Label x:Name="ResetAllLabel" Text="{Binding ResetAllLabelText}" VerticalOptions="Center" HorizontalOptions="Center" />
+    </StackLayout>
+  </Grid>
+</f:FreshBaseContentPage>

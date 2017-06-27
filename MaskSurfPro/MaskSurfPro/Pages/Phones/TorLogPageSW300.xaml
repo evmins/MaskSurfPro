@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<f:FreshBaseContentPage  xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+             xmlns:local="clr-namespace:MaskSurfPro.Pages;assembly=MaskSurfPro"
+             x:Class="MaskSurfPro.Pages.TorLogPageSW300">
+  <Grid Padding="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="2*" />
+      <RowDefinition Height="15*" />
+      <RowDefinition Height="3*" />
+    </Grid.RowDefinitions>
+    <Label x:Name="TorLogLabel" Text="{Binding TorLogLabelText}" />
+    <ListView Grid.Row="1" x:Name="TorLogListView" />
+    <Button x:Name="ClearLogBtn" Grid.Row="2" Clicked="ClearLog" Text="{Binding ClearLogBtnText}" HorizontalOptions="Center" VerticalOptions="Start" />
+  </Grid>
+</f:FreshBaseContentPage>

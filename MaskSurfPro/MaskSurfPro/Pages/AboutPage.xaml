@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MaskSurfPro.Pages.AboutPage">
+  <StackLayout Orientation="Vertical" Padding="20" Spacing="20">
+  <Label x:Name="VersionLabel" Text="{Binding VersionLabelText}" VerticalOptions="Center" HorizontalOptions="Start" FontAttributes="Bold" />
+  <Label x:Name="SystemDescLabel" Text="{Binding SystemDescLabelText}" VerticalOptions="Center" HorizontalOptions="Start" />
+  <Label x:Name="SNLabel" Text="{Binding SNLabelText}" VerticalOptions="End" HorizontalOptions="Start" />
+    <StackLayout Orientation="Horizontal" Spacing="20">
+      <Image x:Name="FBLogo" WidthRequest="96" HeightRequest="96" />
+      <Image x:Name="GPLogo" WidthRequest="96" HeightRequest="96" />
+      <Image x:Name="VKLogo" WidthRequest="96" HeightRequest="96" />
+    </StackLayout>
+    <Label x:Name="DisclaimerLabel" Text="{Binding DisclaimerLabelText}" VerticalOptions="Center" HorizontalOptions="Start" />
+    <Label x:Name="DisclaimerText" Text="{Binding DisclaimerText}" VerticalOptions="Start" HorizontalOptions="Start" />
+
+    <Label x:Name="CopyrightLabel" Text="{Binding CopyrightLabelText}" VerticalOptions="End" HorizontalOptions="Start" />
+  </StackLayout>
+</ContentPage>

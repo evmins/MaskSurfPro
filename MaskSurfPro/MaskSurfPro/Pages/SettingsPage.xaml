@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<f:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+             x:Class="MaskSurfPro.Pages.SettingsPage">
+<Grid Padding="10">
+<Grid.RowDefinitions>
+  <RowDefinition Height="8*" />
+  <RowDefinition Height="2*" />
+  <RowDefinition Height="*" />
+</Grid.RowDefinitions>
+    <TableView x:Name="SettingsTable" Intent="Settings">
+      <TableRoot>
+        <TableSection x:Name="PortsSection" Title="{Binding PortsTitleText}">
+        <EntryCell x:Name="TorPort" Label="{Binding TorPortLabelText}" Placeholder="9050" Keyboard="Numeric"  />
+        <EntryCell x:Name="TorComPort" Label="{Binding TorComPortText}" Placeholder="9051" Keyboard="Numeric"  />
+        <EntryCell x:Name="PolipoPort" Label="{Binding PolipoPortText}" Placeholder="8000" Keyboard="Numeric"  />
+        </TableSection>
+        <!--
+      <TableSection x:Name="BootSection" Title="Boot">
+        <SwitchCell x:Name="IsStartOnBoot" Text="Start Mask Surf Pro on system's start" On="False" />
+        </TableSection>-->
+      </TableRoot>
+    </TableView>
+  <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="End" Spacing="30">
+<Button  x:Name="ApplySettingsBtn" Text="{Binding ApplySettingsBtnText}" HorizontalOptions="Start" VerticalOptions="Center" Clicked="ApplySettings" />
+<Button  x:Name="CancelSettingsBtn" Text="{Binding CancelSettingsBtnText}" HorizontalOptions="End" VerticalOptions="Center" Clicked="CancelSettings" />
+    </StackLayout>
+</Grid>
+</f:FreshBaseContentPage>

@@ -1,0 +1,14 @@
+SOCKSPort 9050
+SocksListenAddress 127.0.0.1 # accept connections only from localhost
+ControlPort 9051
+ClientOnly 1 ##Tor as client only
+HashedControlPassword 16:201B057720B67CA3600EE101BE53C061D0C20DDD49C3DFC29E4EDE8F0F
+WarnUnsafeSocks 0
+UseMicrodescriptors 0
+DNSPort 5400
+DisableNetwork 0
+GeoIPFile /data/data/com.thanksoft.masksurfpro/Tor/geoip
+GeoIPv6File /data/data/com.thanksoft.masksurfpro/Tor/geoip6
+DataDirectory /data/data/com.thanksoft.masksurfpro/Tor/data
+StrictNodes 0
+

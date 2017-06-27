@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:StatusPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+             xmlns:local="clr-namespace:MaskSurfPro.Pages;assembly=MaskSurfPro"
+             x:Class="MaskSurfPro.Pages.StatusPageSW300p">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="16*" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="18*" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="14*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="2*" />
+      <RowDefinition Height="2*" />
+      <RowDefinition Height="2*" />
+    </Grid.RowDefinitions>
+    <StackLayout Grid.RowSpan="3" Orientation="Vertical" VerticalOptions="Start">
+      <TableView x:Name="ActiveConnections" Intent="Data">
+        <TableRoot>
+          <TableSection x:Name="ActiveConnection" Title="{Binding ActiveConnectionTitle}">
+            <TextCell x:Name="ActiveConName" Text="{Binding ActiveConnectionName}" />
+            <TextCell x:Name="ActiveConProxy" Text="{Binding ActiveConnectionProxy}" />
+            <TextCell x:Name="ActiveConStatus" Text="{Binding ActiveConnectionStatus}" />
+          </TableSection>
+        </TableRoot>
+      </TableView>
+      <StackLayout Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="End">
+        <Label x:Name="TrueIPDesc" Text="{Binding TrueIPDescription}" />
+        <Label x:Name="TrueIP" />
+      </StackLayout>
+    </StackLayout>
+    <StackLayout Grid.Column="2" x:Name="Logo">
+      <Label x:Name="ProgramName" Text="Mask Surf Pro" VerticalOptions="Start" HorizontalOptions="Center" />
+      <Image x:Name="MSPLogo" Grid.Row="1" WidthRequest="96" />
+    </StackLayout>
+    <StackLayout Grid.Column="2" Grid.Row="1" Orientation="Vertical" Grid.RowSpan="2">
+      <Label x:Name="LoadingMessage" Text="{Binding StartWaitMessageText}" FontAttributes="Bold" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Center" />
+      <ListView x:Name="FalseIPList" Header="{Binding FalseIPDesc}" HasUnevenRows="True" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand" />
+    </StackLayout>
+    <Grid x:Name="Nav" Grid.Column="4" Grid.RowSpan="2" Padding="10">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Button x:Name="GoToCountries" Text="{Binding GoToCountriesText}"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToCountriesNav" />
+      <Button x:Name="GoToTorLog" Text="{Binding GoToTorLogText}" Grid.Row="1"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToTorLogNav" />
+      <Button x:Name="GoToSettings" Text="{Binding GoToSettingsText}" Grid.Row="2" VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToSettingsNav" />
+      <Button x:Name="GoToAbout" Text="{Binding GoToAboutText}" Grid.Row="3"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToAboutNav" />
+    </Grid>
+    <StackLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Horizontal" Padding="10">
+      <Label x:Name="ConnectionStatusDescription" VerticalOptions="End" HorizontalOptions="Center" />
+      <StackLayout Orientation="Vertical">
+        <Button  x:Name="RefreshActiveConnection" Text="{Binding RefreshButtonText}" VerticalOptions="Center" HorizontalOptions="Center" Clicked="Refresh" />
+        <Button x:Name="ShowTipsBtn" Text="?" VerticalOptions="Center" HorizontalOptions="Center" Clicked="ShowTips" />
+      </StackLayout>
+    </StackLayout>
+  </Grid>
+</local:StatusPage>

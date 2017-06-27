@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<f:FreshBaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:f="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+             x:Class="MaskSurfPro.Pages.ProxyTipsAPNPage">
+  <ScrollView Orientation="Vertical">
+    <StackLayout Orientation="Vertical" Spacing="20" Padding="10">
+    <Label x:Name="APNHeading" Text="{Binding APNHeadingText}" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" />
+    <Label x:Name="APNTip1" Text="{Binding APNTip1Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <Label x:Name="APNTip2" Text="{Binding APNTip2Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <Label x:Name="APNTip3" Text="{Binding APNTip3Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <Image x:Name="APNImage1" VerticalOptions="Center" HorizontalOptions="Start" />
+    <Label x:Name="APNTip4" Text="{Binding APNTip4Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <Image x:Name="APNImage2" VerticalOptions="Center" HorizontalOptions="Start" />
+    <Label x:Name="APNTip5" Text="{Binding APNTip5Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <Label x:Name="APNTip6" Text="{Binding APNTip6Text}" VerticalOptions="Start" HorizontalOptions="Start" />
+    <StackLayout Orientation="Horizontal" Spacing="20">
+    <Image x:Name="APNImage3" VerticalOptions="Center" HorizontalOptions="Start" />
+    <Image x:Name="APNImage4" VerticalOptions="Center" HorizontalOptions="Start" />
+    </StackLayout>
+      <Label x:Name="APNTip7" Text="{Binding APNTip7Text}" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold" />
+    </StackLayout>
+  </ScrollView>
+</f:FreshBaseContentPage>
