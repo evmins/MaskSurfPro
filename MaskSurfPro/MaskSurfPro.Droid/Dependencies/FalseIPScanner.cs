@@ -50,7 +50,7 @@ namespace MaskSurfPro.Droid
                 {
                     ScanFalseIPs();
                     CheckOutdated();
-                    MessagingCenter.Send(((MSProApp)Xamarin.Forms.Application.Current).StatusVM, "IPsScaned");
+                    MessagingCenter.Send(MSProApp.Locator.StatusVM, "IPsScaned");
                 });
                 t = Task.Delay(60000);
                 t.Wait();

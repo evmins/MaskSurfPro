@@ -12,6 +12,7 @@ using Android.Widget;
 using Android.Net;
 using Android.Net.Wifi;
 
+
 [assembly: Xamarin.Forms.Dependency(typeof(MaskSurfPro.Droid.ConnectionStatus))]
 
 namespace MaskSurfPro.Droid
@@ -49,12 +50,12 @@ namespace MaskSurfPro.Droid
                 if (ActiveCon.Proxy.IndexOf("localhost:" + Settings.GetInt("Polipo port", 8000).ToString()) >= 0 || ActiveCon.Proxy.IndexOf("127.0.0.1:" + Settings.GetInt("Polipo port", 8000).ToString()) >= 0)
                 {
                     ActiveCon.IsSafe = true;
-                    ActiveCon.DisplayStatus = Translation.GetString("Anonymous");
+                    ActiveCon.DisplayStatus = MSProApp.Locator.StatusVM.Anonymous;
                 }
                 else
                 {
                     ActiveCon.IsSafe = false;
-                    ActiveCon.DisplayStatus = Translation.GetString("Not anonymous");
+                    ActiveCon.DisplayStatus = MSProApp.Locator.StatusVM.NotAnonymous;
                 }
 
                 return ActiveCon;

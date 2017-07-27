@@ -8,9 +8,8 @@
   <Label x:Name="SNLabel" Text="{Binding SNLabelText}" VerticalOptions="End" HorizontalOptions="Start" />
     <StackLayout Orientation="Horizontal" Spacing="20">
       <Image x:Name="FBLogo" WidthRequest="96" HeightRequest="96" />
-      <Image x:Name="GPLogo" WidthRequest="96" HeightRequest="96" />
-      <Image x:Name="VKLogo" WidthRequest="96" HeightRequest="96" />
-    </StackLayout>
+            <Image x:Name="GPLogo" WidthRequest="96" HeightRequest="96" />
+        </StackLayout>
     <Label x:Name="DisclaimerLabel" Text="{Binding DisclaimerLabelText}" VerticalOptions="Center" HorizontalOptions="Start" />
     <Label x:Name="DisclaimerText" Text="{Binding DisclaimerText}" VerticalOptions="Start" HorizontalOptions="Start" />
 

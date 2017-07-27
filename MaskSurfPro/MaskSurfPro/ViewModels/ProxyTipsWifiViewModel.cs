@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
+
+using MaskSurfPro.Resources;
 
 namespace MaskSurfPro.ViewModels
 {
-    public class ProxyTipsWifiViewModel : FreshMvvm.FreshBasePageModel
+    public class ProxyTipsWifiViewModel : ViewModelBase
     {
 
         //translation properties
@@ -21,23 +24,18 @@ namespace MaskSurfPro.ViewModels
 
         public ProxyTipsWifiViewModel()
         {
-        }
-        public override void Init(object initData)
-        {
-            base.Init(initData);
             Translate();
         }
         public void Translate()
         {
-            //VersionLabelText = "Mask Surf Pro " + Translation.GetString("version") + " " + ((MSProApp)MSProApp.Current).Version;
-            WifiHeadingText = Translation.GetString("Setup proxy Wifi");
-            WifiTip1Text = Translation.GetString("Wifi tip 1");
-            WifiTip2Text = Translation.GetString("Wifi tip 2");
-            WifiTip3Text = Translation.GetString("Wifi tip 3");
-            WifiTip4Text = Translation.GetString("Wifi tip 4");
-            WifiTip5Text = Translation.GetString("Wifi tip 5");
-            WifiTip6Text = Translation.GetString("Wifi tip 6");
-            WifiTip7Text = Translation.GetString("Switch back warning");
+            WifiHeadingText = AppStrings.SetupProxyWifi;
+            WifiTip1Text = AppStrings.WifiTip1;
+            WifiTip2Text = AppStrings.WifiTip2;
+            WifiTip3Text = AppStrings.WifiTip3;
+            WifiTip4Text = AppStrings.WifiTip4;
+            WifiTip5Text = AppStrings.WifiTip5;
+            WifiTip6Text = AppStrings.WifiTip6;
+            WifiTip7Text = AppStrings.SwitchBackWarning;
         }
     }
 }

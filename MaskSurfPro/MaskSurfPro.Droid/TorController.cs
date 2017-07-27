@@ -27,7 +27,7 @@ namespace MaskSurfPro
     //dependency services
     public class TorControllerOnAndroid : ITorController
     {
-        //class content removed
+        //code removed
     }
 
 

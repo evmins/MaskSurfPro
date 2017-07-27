@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>О приложении</value>
+  </data>
+  <data name="ActiveConnection" xml:space="preserve">
+    <value>Активное подключение</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="AndroidNotes" xml:space="preserve">
+    <value>Mask Surf Pro для Android был разработан для устройств без root доступа. Вот почему настройки прокси приходится устанавливать вручную. Android не позволяет делать это автоматически на обычных устройствах без root доступа.</value>
+  </data>
+  <data name="Anonymous" xml:space="preserve">
+    <value>Анонимно</value>
+  </data>
+  <data name="AnonymousNetworkStatus" xml:space="preserve">
+    <value>Статус анонимной сети</value>
+  </data>
+  <data name="APN" xml:space="preserve">
+    <value>Мобильный интернет</value>
+  </data>
+  <data name="APNTip1" xml:space="preserve">
+    <value>Откройте Настройки.</value>
+    <comment>Пожалуйста, сверьтесь с интерфейсом Andrioid для использования правильных терминов при переводе на ваш язык.</comment>
+  </data>
+  <data name="APNTip2" xml:space="preserve">
+    <value>В "Беспроводные сети" выберите "Еще".</value>
+  </data>
+  <data name="APNTip3" xml:space="preserve">
+    <value>Выберите "Мобильная сеть".</value>
+  </data>
+  <data name="APNTip4" xml:space="preserve">
+    <value>В появившемся списке выберите "Точки доступа (APN)".</value>
+  </data>
+  <data name="APNTip5" xml:space="preserve">
+    <value>Выберите название вашего мобильного интернет-соединения.</value>
+  </data>
+  <data name="APNTip6" xml:space="preserve">
+    <value>Введите "localhost" в поле "Прокси" и ваш Polipo порт (по умолчанию 8000) в поле "Порт". Другие настройки изменять не нужно. Затем нажмите "Сохранить".</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="ApplyList" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="CancelList" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
+  <data name="Cities" xml:space="preserve">
+    <value>Города</value>
+  </data>
+  <data name="CitiesCancelled" xml:space="preserve">
+    <value>Выбранный список городов отменен.</value>
+  </data>
+  <data name="CitiesNotSelected" xml:space="preserve">
+    <value>Города не выбраны!</value>
+  </data>
+  <data name="CitiesSelected" xml:space="preserve">
+    <value>Города выбраны, IP адреса добавлены.</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="Countries" xml:space="preserve">
+    <value>Страны</value>
+  </data>
+  <data name="CountriesCancelled" xml:space="preserve">
+    <value>Выбранный список стран отменен.</value>
+  </data>
+  <data name="CountriesNotSelected" xml:space="preserve">
+    <value>Страны не выбраны!</value>
+  </data>
+  <data name="CountriesSelected" xml:space="preserve">
+    <value>Страны выбраны, IP адреса добавлены.</value>
+  </data>
+  <data name="Disclaimer" xml:space="preserve">
+    <value>Tor является собственностью The Tor Project. Mask Surf произведен независимо от анонимного программного обеспечения Tor™ и The Tor Project не предоставляет гарантий касательно его качества, исправности или чего-либо еще.</value>
+  </data>
+  <data name="DownloadWaitMessage" xml:space="preserve">
+    <value>Пожалуйста, подождите. Загружаем информацию из сети.</value>
+  </data>
+  <data name="FalseIPLabel" xml:space="preserve">
+    <value>Ваш ложный IP:</value>
+  </data>
+  <data name="GetCitiesFirst" xml:space="preserve">
+    <value>Необходимо получить полный список городов перед изменением выбранных городов.</value>
+  </data>
+  <data name="GetCitiesList" xml:space="preserve">
+    <value>Получить список городов</value>
+  </data>
+  <data name="GetCountriesList" xml:space="preserve">
+    <value>Получить список стран</value>
+  </data>
+  <data name="GooglePlayNotAvailable" xml:space="preserve">
+    <value>Не удалось получить лицензионную информацию от Google Play. Проверьте ваше интернет подключение и попробуйте снова.</value>
+  </data>
+  <data name="LanguageEnglishName" xml:space="preserve">
+    <value>Russian</value>
+  </data>
+  <data name="LanguageNativeName" xml:space="preserve">
+    <value>Русский</value>
+  </data>
+  <data name="MaskSurfOnSocialNetworks" xml:space="preserve">
+    <value>Mask Surf в социальных сетях</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="NoActiveConnection" xml:space="preserve">
+    <value>Нет сетевого подключения</value>
+  </data>
+  <data name="NotAnonymous" xml:space="preserve">
+    <value>Не анонимно</value>
+  </data>
+  <data name="NotLicensed" xml:space="preserve">
+    <value>У вас нет лицензии на это приложение или отсутствует подключение к интернет. Пожалуйста, установите интернет-соединение перед запуском Mask Surf.</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>ОК</value>
+  </data>
+  <data name="PolipoListeningPort" xml:space="preserve">
+    <value>Порт Polipo</value>
+  </data>
+  <data name="Ports" xml:space="preserve">
+    <value>Порты</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Прокси</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="ResetAllConfirmation" xml:space="preserve">
+    <value>Пожалуйста подтвердите что вы желаете сбросить все настройки программы.</value>
+  </data>
+  <data name="ResetAllDescription" xml:space="preserve">
+    <value>Сбросить все настройки на значения по умолчанию.</value>
+  </data>
+  <data name="ResetAllLabel" xml:space="preserve">
+    <value>Сбросить всё</value>
+  </data>
+  <data name="SelectedCities" xml:space="preserve">
+    <value>Выбранные города</value>
+  </data>
+  <data name="SelectedCountries" xml:space="preserve">
+    <value>Выбранные страны</value>
+  </data>
+  <data name="SelectedRegions" xml:space="preserve">
+    <value>Выбранные регионы</value>
+  </data>
+  <data name="SetProxyFirst" xml:space="preserve">
+    <value>Пожалуйста, установите прокси перед тестированием IP, иначе ложный IP не будет работать.</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="SettingsApplied" xml:space="preserve">
+    <value>Настройки изменены.</value>
+  </data>
+  <data name="SettingsNotApplied" xml:space="preserve">
+    <value>Настройки не изменены, что-то не сработало.</value>
+  </data>
+  <data name="SettingsWereReset" xml:space="preserve">
+    <value>Настройки были сброшены.</value>
+  </data>
+  <data name="SetupProxyAPN" xml:space="preserve">
+    <value>Установить прокси для мобильного интернета.</value>
+  </data>
+  <data name="SetupProxyWifi" xml:space="preserve">
+    <value>Установить прокси для Wi-Fi</value>
+  </data>
+  <data name="StartWaitMessage" xml:space="preserve">
+    <value>Пожалуйста, подождите. Соединяемся с анонимной сетью.</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="SwitchBackWarning" xml:space="preserve">
+    <value>Не забудьте переключить настройки прокси-сеервера обратно когда Mask Surf Pro не запущен.</value>
+  </data>
+  <data name="TestIP" xml:space="preserve">
+    <value>Проверка IP</value>
+  </data>
+  <data name="TheTorProjectDisclaimer" xml:space="preserve">
+    <value>Отказ от ответственности The Tor Project.</value>
+  </data>
+  <data name="TorControlPort" xml:space="preserve">
+    <value>Порт управления Tor</value>
+  </data>
+  <data name="TorListeningPort" xml:space="preserve">
+    <value>Порт Tor</value>
+  </data>
+  <data name="TorLog" xml:space="preserve">
+    <value>Журнал Tor</value>
+  </data>
+  <data name="TorLogLabel" xml:space="preserve">
+    <value>Этот журнал содержит сообщения Tor.</value>
+  </data>
+  <data name="TotalCities" xml:space="preserve">
+    <value>Всего городов:</value>
+  </data>
+  <data name="TotalCountries" xml:space="preserve">
+    <value>Всего стран:</value>
+  </data>
+  <data name="TotalExitRelays" xml:space="preserve">
+    <value>Всего точек выхода:</value>
+  </data>
+  <data name="TotalUnknownLocations" xml:space="preserve">
+    <value>Всего неточных расположений:</value>
+  </data>
+  <data name="TrafficAnonymized" xml:space="preserve">
+    <value>Ваше сетевое подключение работает в анонимном режиме.</value>
+  </data>
+  <data name="TrafficNotAnonymized" xml:space="preserve">
+    <value>Ваше сетевое подключение НЕ анонимно! Пожалуйста, установите настройки прокси localhost и порт 8000.</value>
+  </data>
+  <data name="TrueIPLabel" xml:space="preserve">
+    <value>Ваш настоящий IP:</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>версия</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Предупреждение</value>
+  </data>
+  <data name="Wifi" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="WifiTip1" xml:space="preserve">
+    <value>Откройте список подключений Wi-Fi.</value>
+    <comment>Пожалуйста, сверьтесь с интерфейсом Andrioid для использования правильных терминов при переводе на ваш язык.</comment>
+  </data>
+  <data name="WifiTip2" xml:space="preserve">
+    <value>Сделайте длинное нажатие на текущем Wi-Fi подключении.</value>
+  </data>
+  <data name="WifiTip3" xml:space="preserve">
+    <value>Выберите "Изменить сеть".</value>
+  </data>
+  <data name="WifiTip4" xml:space="preserve">
+    <value>Отметьте галочку "Дополнительно".</value>
+  </data>
+  <data name="WifiTip5" xml:space="preserve">
+    <value>Выберите вариант "Вручную" для поля "Прокси-сервер".</value>
+  </data>
+  <data name="WifiTip6" xml:space="preserve">
+    <value>Введите "localhost" в поле "Имя хоста прокси-сервера" и ваш Polipo порт (по умолчанию 8000) в поле "Порт прокси-сервера". Другие настройки изменять не нужно. Затем нажмите "Сохранить". Не забудьте переключить настройки прокси-сеервера обратно когда Mask Surf Pro не запущен.</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
+</root>

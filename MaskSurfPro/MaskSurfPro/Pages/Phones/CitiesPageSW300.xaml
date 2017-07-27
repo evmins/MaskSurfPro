@@ -37,7 +37,7 @@
     <StackLayout x:Name="RightGrid" Grid.Column="2" Grid.Row="1" Grid.RowSpan="5" Orientation="Vertical">
       <Label Text="{Binding SelectedCitiesLabelText}" x:Name="SelectedCitiesLabel" />
       <ListView x:Name="SelectedCities" VerticalOptions="StartAndExpand" />
-      <StackLayout Orientation="Horizontal" VerticalOptions="End">
+      <StackLayout Orientation="Vertical" VerticalOptions="End">
         <Button x:Name="ApplySelectedCities" Text="{Binding ApplySelectedCitiesText}" HorizontalOptions="Center" VerticalOptions="Center" Clicked="ApplyCitiesList" />
         <Button x:Name="CancelSelectedCities" Text="{Binding CancelSelectedCitiesText}" HorizontalOptions="Center" VerticalOptions="Center" Clicked="CancelCitiesList" />
       </StackLayout>

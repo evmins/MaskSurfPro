@@ -6,12 +6,12 @@
              x:Class="MaskSurfPro.Pages.TorLogPageSW400">
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="2*" />
-      <RowDefinition Height="15*" />
       <RowDefinition Height="3*" />
+      <RowDefinition Height="13*" />
+      <RowDefinition Height="4*" />
     </Grid.RowDefinitions>
-    <Label x:Name="TorLogLabel" Text="{Binding TorLogLabelText}" />
+    <Label x:Name="TorLogLabel" Text="{Binding TorLogLabelText}" Margin="20,10,0,0" />
     <ListView Grid.Row="1" x:Name="TorLogListView" />
-    <Button x:Name="ClearLogBtn" Grid.Row="2" Clicked="ClearLog" Text="{Binding ClearLogBtnText}" HorizontalOptions="Center" VerticalOptions="Start" />
+    <Button x:Name="ClearLogBtn" Grid.Row="2" Clicked="ClearLog" Text="{Binding ClearLogBtnText}" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,10,0,0" />
   </Grid>
 </f:FreshBaseContentPage>

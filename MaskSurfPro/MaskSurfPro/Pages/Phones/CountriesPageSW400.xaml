@@ -6,9 +6,9 @@
              x:Class="MaskSurfPro.Pages.CountriesPageSW400">
   <Grid x:Name="CountriesGrid" Padding="10">
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="3*" />
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="3*" />
+      <ColumnDefinition Width="7*" />
+      <ColumnDefinition Width="2*" />
+      <ColumnDefinition Width="5*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
@@ -35,7 +35,7 @@
     <StackLayout x:Name="RightGrid" Grid.Column="2" Grid.Row="1" Grid.RowSpan="4" Orientation="Vertical">
       <Label Text="{Binding SelectedCountriesLabelText}" x:Name="SelectedCountriesLabel" />
       <ListView x:Name="SelectedCountries" HorizontalOptions="Center" VerticalOptions="Center" />
-      <StackLayout Orientation="Horizontal">
+      <StackLayout Orientation="Vertical">
         <Button x:Name="ApplySelectedCountries" Text="{Binding ApplySelectedCountriesText}" HorizontalOptions="Center" VerticalOptions="Center" Clicked="ApplyCountriesList" />
         <Button x:Name="CancelSelectedCountries" Text="{Binding CancelSelectedCountriesText}" HorizontalOptions="Center" VerticalOptions="Center" Clicked="CancelCountriesList" />
       </StackLayout>

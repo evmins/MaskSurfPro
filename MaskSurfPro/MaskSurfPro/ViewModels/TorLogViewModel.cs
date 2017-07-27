@@ -5,37 +5,44 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
+using GalaSoft.MvvmLight;
+using MaskSurfPro.Pages;
+using MaskSurfPro.Resources;
 
 namespace MaskSurfPro.ViewModels
 {
-    public class TorLogViewModel : FreshMvvm.FreshBasePageModel
+    public class TorLogViewModel : ViewModelBase
     {
+        public TorLogPage CurrentPage { get; set; }
+
         //translation properties
         public string TorLogLabelText { get; set; }
         public string ClearLogBtnText { get; set; }
 
-        public ObservableCollection<string> TorLog;
-        /*
-        ObservableCollection<string> Log
+        private ObservableCollection<string> torLog;
+        
+        public ObservableCollection<string> TorLog
         {
-            get { return ((MSProApp)MSProApp.Current).TorLog; }
+            get { return torLog; }
         }
-        */
+        
 
         public TorLogViewModel()
         {
-        }
-
-        public override void Init(object initData)
-        {
-            base.Init(initData);
             Translate();
-            TorLog = new ObservableCollection<string>();
+            torLog = new ObservableCollection<string>();
+        }
+        public void ClearLog()
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                torLog.Clear();
+            });
         }
         void Translate()
         {
-            TorLogLabelText = Translation.GetString("Tor log label");
-            ClearLogBtnText = Translation.GetString("Clear");
+            TorLogLabelText = AppStrings.TorLogLabel;
+            ClearLogBtnText = AppStrings.Clear;
         }
     }
 }

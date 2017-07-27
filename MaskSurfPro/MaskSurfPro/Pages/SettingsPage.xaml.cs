@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using MaskSurfPro.ViewModels;
+using MaskSurfPro.Resources;
 
 namespace MaskSurfPro.Pages
 {
@@ -14,6 +15,8 @@ namespace MaskSurfPro.Pages
         public SettingsPage()
         {
             InitializeComponent();
+
+            BindingContext = MSProApp.Locator.SettingsVM;
         }
         protected override void OnAppearing()
         {
@@ -24,7 +27,7 @@ namespace MaskSurfPro.Pages
             PolipoPort.Text= Settings.GetInt("Polipo port", 8000).ToString();
             //IsStartOnBoot.On = Settings.GetBool("Start on boot", false);
 
-            SettingsViewModel svm = ((MSProApp)Application.Current).SettingsVM;
+            SettingsViewModel svm = MSProApp.Locator.SettingsVM;
             PortsSection.Title = svm.PortsTitleText;
             TorPort.Label = svm.TorPortLabelText;
             TorComPort.Label = svm.TorComPortText;
@@ -34,7 +37,7 @@ namespace MaskSurfPro.Pages
         }
         void ApplySettings(object sender, EventArgs e)
         {
-            SettingsViewModel svm = ((MSProApp)Application.Current).SettingsVM;
+            SettingsViewModel svm = MSProApp.Locator.SettingsVM;
 
             if (String.IsNullOrWhiteSpace(TorPort.Text))
             {
@@ -87,11 +90,11 @@ namespace MaskSurfPro.Pages
 
             if (svm.ApplySettings())
             {
-                DisplayAlert("Mask Surf Pro", Translation.GetString("Settings applied"), Translation.GetString("OK"));
+                DisplayAlert("Mask Surf Pro", AppStrings.SettingsApplied, AppStrings.OK);
             }
             else
             {
-                DisplayAlert(Translation.GetString("Warning"), Translation.GetString("Settings not applied"), Translation.GetString("OK"));
+                DisplayAlert(AppStrings.Warning, AppStrings.SettingsNotApplied, AppStrings.OK);
             }
             Application.Current.MainPage.Navigation.PopAsync();
         }

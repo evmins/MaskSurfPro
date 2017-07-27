@@ -4,14 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Xamarin.Forms;
+using GalaSoft.MvvmLight;
 
 using MaskSurfPro.Pages;
+using MaskSurfPro.Resources;
+using MaskSurfPro.Models;
 
 namespace MaskSurfPro.ViewModels
 {
-    public class CountriesViewModel : FreshMvvm.FreshBasePageModel
+    public class CountriesViewModel : ViewModelBase
     {
+        public CountriesPage CurrentPage { get; set; }
+
         //all countries lists
         List<string> ExitListNames = new List<string>();
         List<string> ExitListIPs = new List<string>();
@@ -21,11 +27,11 @@ namespace MaskSurfPro.ViewModels
         string AllCountriesCodes;
 
         //selected countries list
-        private ObservableCollection<string> selectedCountriesList;
-        public ObservableCollection<string> SelectedCountriesList
+        public ObservableCollection<string> SelectedCountriesList;
+       /* public ObservableCollection<string> SelectedCountriesList
         {
             get { return selectedCountriesList; }
-        }
+        }*/
         public int ExitIPsNum
         {
             get { return ExitListIPs.Count; }
@@ -50,61 +56,30 @@ namespace MaskSurfPro.ViewModels
 
         public CountriesViewModel()
         {
-            selectedCountriesList = new ObservableCollection<string>();
-            MessagingCenter.Subscribe<CountriesViewModel>(this, "CountriesCanceled", (sender) =>
-            {
-                selectedCountriesList.Clear();
-                MessagingCenter.Send<CountriesPage>((CountriesPage)CurrentPage, "CountriesChanged");
-                /*
-                for (int i = selectedCountriesList.Count - 1; i > 0; i--)
-                {
-                    selectedCountriesList.Clear();
-                }
-                */
-            });
-
-        }
-
-        public override void Init(object initData)
-        {
-            base.Init(initData);
+            SelectedCountriesList = new ObservableCollection<string>();
             Translate();
         }
         public void LoadSettings()
         {
             if (Settings.GetStringCollection("Selected countries list") != null)
             {
-                selectedCountriesList = new ObservableCollection<string>(Settings.GetStringCollection("Selected countries list"));
+                SelectedCountriesList = new ObservableCollection<string>(Settings.GetStringCollection("Selected countries list"));
             }
         }
         public async Task GetCountiesListThread()
         {
-            await Task.Run(() =>
-          {
-             //code removed
-          });
-
-
-            var SortedCountries = from item in WorkCountriesList
-                                  orderby item.Number descending
-                                  select item;
-
-            foreach (Country cur in SortedCountries)
-            {
-                ExitCountries.Add(cur.Name + "  " + cur.Number);
-            }
+            //code removed
         }
         public bool ApplySelectedCountriesList()
         {
 
             if (SelectedCountriesList.Count <= 0)
             {
-                //MessageBox.Show(GetTranslation("Countries are not selected", "Messages"));
                 return false;
             }
 
 
-            //remove previous country's nodes
+            //удаление серверов предыдущей страны
             StringBuilder strConfig = new StringBuilder();
             StringBuilder ExcludedCodesResult = new StringBuilder();
             int nStart;
@@ -136,8 +111,6 @@ namespace MaskSurfPro.ViewModels
             }
 
             StringBuilder strNewExitCountriesEntry = new StringBuilder();
-            //if (rbtnListModeInclude.IsChecked == true)
-            //{
             for (int i = 0; i < SelectedCountriesList.Count; i++)
             {
                 strNewExitCountriesEntry.Append("{");
@@ -145,24 +118,6 @@ namespace MaskSurfPro.ViewModels
                 strNewExitCountriesEntry.Append("},");
             }
             strNewExitCountriesEntry.Remove(strNewExitCountriesEntry.Length - 1, 1);
-            //}
-            /*
-            if (rbtnListModeExclude.IsChecked == true)
-            {
-                strNewExitCountriesEntry.Append(AllCountriesCodes.ToUpper());
-                strNewExitCountriesEntry.Append(",");
-                StringBuilder CodeToRemove = new StringBuilder();
-                for (int i = 0; i < lbSelectedCountries.Items.Count; i++)
-                {
-                    CodeToRemove.Clear();
-                    CodeToRemove.Append("{");
-                    CodeToRemove.Append(Tor.CountryToCode(lbSelectedCountries.Items.GetItemAt(i).ToString()));
-                    CodeToRemove.Append("},");
-                    strNewExitCountriesEntry.Replace(CodeToRemove.ToString(), "");
-                }
-                strNewExitCountriesEntry.Remove(strNewExitCountriesEntry.Length - 1, 1);
-            }
-            */
 
             //write country codes
             if (!String.IsNullOrEmpty(strNewExitCountriesEntry.ToString()))
@@ -187,17 +142,13 @@ namespace MaskSurfPro.ViewModels
                 bResult = Tor.SendSimpleSignal("SIGNAL NEWNYM\r\n");
             });
 
-            StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
-            if (svm != null)
+            StatusViewModel svm = MSProApp.Locator.StatusVM;
+            CitiesViewModel civm = MSProApp.Locator.CitiesVM;
+            Device.BeginInvokeOnMainThread(() =>
             {
-                MessagingCenter.Send<StatusViewModel, ObservableCollection<string>>(svm, "RegionsChanged", SelectedCountriesList);
-            }
-            CitiesViewModel cvm = ((MSProApp)Application.Current).CitiesVM;
-            if (cvm != null)
-            {
-                MessagingCenter.Send<CitiesViewModel>(cvm, "CitiesCanceled");
-            }
-            MessagingCenter.Send<CountriesPage>((CountriesPage)CurrentPage, "CountriesChanged");
+                svm.SelectedRegionsList = new ObservableCollection<string>(SelectedCountriesList);
+                civm.SelectedCitiesList.Clear();
+            });
 
             Settings.SetStringCollection("Selected countries list", SelectedCountriesList);
             Settings.SetStringCollection("Selected regions list", SelectedCountriesList);
@@ -246,52 +197,46 @@ namespace MaskSurfPro.ViewModels
             Settings.Remove("Selected cites list");
             Settings.Remove("Selected regions list");
 
-            SelectedCountriesList.Clear();
-            MessagingCenter.Send<CountriesPage>((CountriesPage)CurrentPage, "CountriesChanged");
-            StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
-            if (svm != null)
+            StatusViewModel svm = MSProApp.Locator.StatusVM;
+            CitiesViewModel civm = MSProApp.Locator.CitiesVM;
+
+            Device.BeginInvokeOnMainThread(() =>
             {
-                MessagingCenter.Send<StatusViewModel>(svm, "RegionsCanceled");
-            }
-            CitiesViewModel cvm = ((MSProApp)Application.Current).CitiesVM;
-            if (cvm != null)
-            {
-                //cvm.SelectedCitiesList.Clear();
-                MessagingCenter.Send<CitiesViewModel>(cvm, "CitiesCanceled");
-            }
+                SelectedCountriesList.Clear();
+                svm.SelectedRegionsList.Clear();
+                civm.SelectedCitiesList.Clear();
+            });
         }
         public void AddSelectedCountry(string NewCountry)
         {
-            if (selectedCountriesList.IndexOf(NewCountry) == -1)
+            if (SelectedCountriesList.IndexOf(NewCountry) == -1)
             {
-                selectedCountriesList.Add(NewCountry);
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    SelectedCountriesList.Add(NewCountry);
+                });
             }
         }
         public void RemoveSelectedCountry(string NewCountry)
         {
-            selectedCountriesList.Remove(NewCountry);
-        }
-        public string GetCountryFromDB(string IP)
-        {
-            return DependencyService.Get<ISQLite>().Query(IP);
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                SelectedCountriesList.Remove(NewCountry);
+            });
         }
         void Translate()
         {
-            SelectedCountriesModeLabelText = Translation.GetString("Countries");
-            SelectedCitiesModeLabelText = Translation.GetString("Cities");
-            GetCountriesListBtnText = Translation.GetString("Get countries list");
-            TotalCountriesLabelText = Translation.GetString("Total countries");
-            TotalExitRelaysLabelText = Translation.GetString("Total exit relays");
-            SelectedCountriesLabelText = Translation.GetString("Selected countries");
-            ApplySelectedCountriesText = Translation.GetString("Apply list");
-            CancelSelectedCountriesText = Translation.GetString("Cancel list");
-            AddCountryBtnText = Translation.GetString("Add");
-            RemoveCountryBtnText = Translation.GetString("Remove");
-            WaitLabelText = Translation.GetString("Download wait message");
+            SelectedCountriesModeLabelText = AppStrings.Countries;
+            SelectedCitiesModeLabelText = AppStrings.Cities;
+            GetCountriesListBtnText = AppStrings.GetCountriesList;
+            TotalCountriesLabelText = AppStrings.TotalCountries;
+            TotalExitRelaysLabelText = AppStrings.TotalExitRelays;
+            SelectedCountriesLabelText = AppStrings.SelectedCountries;
+            ApplySelectedCountriesText = AppStrings.ApplyList;
+            CancelSelectedCountriesText = AppStrings.CancelList;
+            AddCountryBtnText = AppStrings.Add;
+            RemoveCountryBtnText = AppStrings.Remove;
+            WaitLabelText = AppStrings.DownloadWaitMessage;
         }
-    }
-    public interface ISQLite
-    {
-        string Query(string IP);
     }
 }

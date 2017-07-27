@@ -15,6 +15,8 @@ namespace MaskSurfPro.Pages
         {
             InitializeComponent();
 
+            BindingContext = MSProApp.Locator.ProxyTipsAPNVM;
+
             APNImage1.Source = ImageSource.FromResource("MaskSurfPro.images.apntip1.png");
             APNImage2.Source = ImageSource.FromResource("MaskSurfPro.images.apntip2.png");
             APNImage3.Source = ImageSource.FromResource("MaskSurfPro.images.apntip3.png");
@@ -33,7 +35,7 @@ namespace MaskSurfPro.Pages
         {
             base.OnAppearing();
 
-            ProxyTipsAPNViewModel ptapnvm = ((MSProApp)Application.Current).PTAPNVM;
+            ProxyTipsAPNViewModel ptapnvm = MSProApp.Locator.ProxyTipsAPNVM;
 
             APNHeading.Text = ptapnvm.APNHeadingText;
             APNTip1.Text = ptapnvm.APNTip1Text;

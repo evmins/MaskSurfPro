@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using MaskSurfPro.ViewModels;
+using MaskSurfPro.Resources;
 
 namespace MaskSurfPro.Pages
 {
@@ -14,29 +15,24 @@ namespace MaskSurfPro.Pages
         public CitiesPage()
         {
             InitializeComponent();
+
+            BindingContext = MSProApp.Locator.CitiesVM;
+            MSProApp.Locator.CitiesVM.CurrentPage = this;
+
             SelectedCitiesLabel.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
             WaitLabel.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
-
-            MessagingCenter.Subscribe<CitiesPage>(this, "CitiesChanged", (sender) =>
-            {
-                CitiesViewModel cvm = ((MSProApp)Application.Current).CitiesVM;
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    SelectedCities.ItemsSource = cvm.SelectedCitiesList;
-                });
-            });
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            CitiesViewModel cvm = ((MSProApp)Application.Current).CitiesVM;
+            CitiesViewModel cvm = MSProApp.Locator.CitiesVM;
             cvm.LoadSettings();
             SelectedCities.ItemsSource = cvm.SelectedCitiesList;
 
-            TotalCitiesLabel.Text = Translation.GetString("Total cities") + " " + cvm.TotalCities.ToString();
-            TotalUnknownLocationsLabel.Text = Translation.GetString("Total unknown locations") + " " + cvm.NotSpecifiedListNum.ToString();
-            TotalExitRelaysLabel.Text = Translation.GetString("Total exit relays") + " " + cvm.TotalExitRouters.ToString();
+            TotalCitiesLabel.Text = AppStrings.TotalCities + " " + cvm.TotalCities.ToString();
+            TotalUnknownLocationsLabel.Text = AppStrings.TotalUnknownLocations + " " + cvm.NotSpecifiedListNum.ToString();
+            TotalExitRelaysLabel.Text = AppStrings.TotalExitRelays + " " + cvm.TotalExitRouters.ToString();
 
             SelectedCountriesModeLabel.Text = cvm.SelectedCountriesModeLabelText;
             SelectedCitiesModeLabel.Text = cvm.SelectedCitiesModeLabelText;
@@ -52,7 +48,7 @@ namespace MaskSurfPro.Pages
         async void GetCitiesList(object sender, EventArgs e)
         {
 
-            CitiesViewModel cvm = ((MSProApp)Application.Current).CitiesVM;
+            CitiesViewModel cvm = MSProApp.Locator.CitiesVM;
             WaitLabel.IsVisible = true;
             GetCitiesListBtn.IsEnabled = false;
             await cvm.GetCitiesListThread();
@@ -60,15 +56,15 @@ namespace MaskSurfPro.Pages
             CitiesToSelect.ItemsSource = cvm.ExitCities;
             SelectedCities.ItemsSource = cvm.SelectedCitiesList;
 
-            TotalCitiesLabel.Text = Translation.GetString("Total cities") + " " + cvm.TotalCities.ToString();
-            TotalUnknownLocationsLabel.Text = Translation.GetString("Total unknown locations") + " " + cvm.NotSpecifiedListNum.ToString();
-            TotalExitRelaysLabel.Text = Translation.GetString("Total exit relays") + " " + cvm.TotalExitRouters.ToString();
+            TotalCitiesLabel.Text = AppStrings.TotalCities + " " + cvm.TotalCities.ToString();
+            TotalUnknownLocationsLabel.Text = AppStrings.TotalUnknownLocations + " " + cvm.NotSpecifiedListNum.ToString();
+            TotalExitRelaysLabel.Text = AppStrings.TotalExitRelays + " " + cvm.TotalExitRouters.ToString();
             WaitLabel.IsVisible = false;
             GetCitiesListBtn.IsEnabled = true;
         }
         void AddSelectedCity(object sender, EventArgs e)
         {
-            CitiesViewModel cvm = ((MSProApp)Application.Current).CitiesVM;
+            CitiesViewModel cvm = MSProApp.Locator.CitiesVM;
             string Selected = CitiesToSelect.SelectedItem.ToString().Replace("  ", "|");
             string[] Temp = Selected.Split('|');
             string City = Temp[0];
@@ -83,11 +79,11 @@ namespace MaskSurfPro.Pages
             }
             if (CitiesToSelect.ItemsSource == null || ((List<string>)CitiesToSelect.ItemsSource).Count == 0)
             {
-                DisplayAlert(Translation.GetString("Warning"), Translation.GetString("Get cities first"), Translation.GetString("OK"));
+                DisplayAlert(AppStrings.Warning, AppStrings.GetCitiesFirst, AppStrings.OK);
                 return;
             }
 
-            CitiesViewModel cvm = ((MSProApp)Application.Current).CitiesVM;
+            CitiesViewModel cvm = MSProApp.Locator.CitiesVM;
             string Selected = SelectedCities.SelectedItem.ToString().Replace("  ", "|");
             string[] Temp = Selected.Split('|');
             string City = Temp[0];
@@ -98,31 +94,31 @@ namespace MaskSurfPro.Pages
         {
             if (CitiesToSelect.ItemsSource == null || ((List<string>)CitiesToSelect.ItemsSource).Count == 0)
             {
-                DisplayAlert(Translation.GetString("Warning"), Translation.GetString("Get cities first"), Translation.GetString("OK"));
+                DisplayAlert(AppStrings.Warning, AppStrings.GetCitiesFirst, AppStrings.OK);
                 return;
             }
 
-            CitiesViewModel cvm = ((MSProApp)Application.Current).CitiesVM;
+            CitiesViewModel cvm = MSProApp.Locator.CitiesVM;
             if (cvm.ApplySelectedCitiesList())
             {
-                DisplayAlert("Mask Surf Pro", Translation.GetString("Cities selected"), Translation.GetString("OK"));
+                DisplayAlert("Mask Surf Pro", AppStrings.CitiesSelected, AppStrings.OK);
             }
             else
             {
-                DisplayAlert(Translation.GetString("Warning"), Translation.GetString("Cities not selected"), Translation.GetString("OK"));
+                DisplayAlert(AppStrings.Warning, AppStrings.CitiesNotSelected, AppStrings.OK);
             }
             SelectedCities.ItemsSource = cvm.SelectedCitiesList;
 
         }
         void CancelCitiesList(object sender, EventArgs e)
         {
-            CitiesViewModel cvm = ((MSProApp)Application.Current).CitiesVM;
+            CitiesViewModel cvm = MSProApp.Locator.CitiesVM;
             cvm.CancelSelectedCitiesList();
 
             //clear lists in views
             cvm.SelectedCitiesList.Clear();
-            StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
-            CountriesViewModel cavm = ((MSProApp)Application.Current).CountriesVM;
+            StatusViewModel svm = MSProApp.Locator.StatusVM;
+            CountriesViewModel cavm = MSProApp.Locator.CountriesVM;
             if (svm != null)
             {
                 svm.SelectedRegionsList = new System.Collections.ObjectModel.ObservableCollection<string>();
@@ -132,10 +128,10 @@ namespace MaskSurfPro.Pages
                 cavm.SelectedCountriesList.Clear();
             }
             SelectedCities.ItemsSource = cvm.SelectedCitiesList;
-            DisplayAlert("Mask Surf Pro", Translation.GetString("Cities cancelled"), Translation.GetString("OK"));
+            DisplayAlert("Mask Surf Pro", AppStrings.CitiesCancelled, AppStrings.OK);
             
         }
-        
+
         void SwitchToCountries(object sender, ToggledEventArgs e)
         {
             if (e.Value)
@@ -143,8 +139,13 @@ namespace MaskSurfPro.Pages
                 return;
             }
             CountriesCitiesSwitch.IsToggled = true;
-            Application.Current.MainPage.Navigation.PopAsync();
-        }  
+            Tabs MainTabs = ((MSProApp)Application.Current).MainTabs;
+            CountriesPage cp = new CountriesPage();
+            cp.Title = AppStrings.Countries;
+            MainTabs.Children.RemoveAt(2);
+            MainTabs.Children.Insert(2, cp);
+            MainTabs.SelectedItem = cp;
+        }
     }
 }
 

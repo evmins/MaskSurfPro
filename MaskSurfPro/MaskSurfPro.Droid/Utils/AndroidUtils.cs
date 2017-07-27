@@ -43,14 +43,9 @@ namespace MaskSurfPro.Droid
             argsTor[1] = "-f";
             argsTor[2] = folder + "/torrc";
 
-            if (System.IO.File.Exists(argsTor[0]))
+            if (!System.IO.File.Exists(argsTor[0]) || !System.IO.File.Exists(argsTor[2]))
             {
-                int z = 0;
-            }
-
-            if (System.IO.File.Exists(argsTor[2]))
-            {
-                int z = 0;
+                //file not found
             }
 
             ProcessBuilder pb = new ProcessBuilder(argsTor);
@@ -86,11 +81,18 @@ namespace MaskSurfPro.Droid
 
                     using (StreamReader reader = new StreamReader(TorProc.InputStream))
                     {
-                        int result;
+                        int result=0;
                         do
                         {
                             char[] buffer = new char[16 * 1024];
-                            result = reader.Read(buffer, 0, buffer.Length);
+                            try
+                            {
+                                result = reader.Read(buffer, 0, buffer.Length);
+                            }
+                            catch (Exception ex)
+                            {
+                                string str = ex.Message;
+                            }
                             if (result > 0)
                             {
                                 AddToLog(new string(buffer));
@@ -102,6 +104,7 @@ namespace MaskSurfPro.Droid
                     string reply = builder.ToString();
 
                 }
+                
                 Thread.Sleep(500);
             }
             while (true);
@@ -117,7 +120,15 @@ namespace MaskSurfPro.Droid
             {
                 if (piece.CompareTo(System.String.Empty) != 0)
                 {
-                    MessagingCenter.Send<MSProApp, string>((MSProApp)MSProApp.Current, "TorOutput", piece);
+                    try
+                    {
+                        MessagingCenter.Send<MSProApp, string>((MSProApp)MSProApp.Current, "TorOutput", piece);
+                        //MessagingCenter.Send(MSProApp.Current, "TorOutput", piece);
+                    }
+                    catch (Exception ex)
+                    {
+                        string str = ex.Message;
+                    }
                 }
                 if (piece.IndexOf("100%") != -1)
                 {
@@ -151,8 +162,8 @@ namespace MaskSurfPro.Droid
 
             //torrc
             path = folder + "/torrc";
-            if (!System.IO.File.Exists(path))
-            {
+           // if (!System.IO.File.Exists(path))
+            //{
                 FileStream TorrcDest = System.IO.File.Create(path);
                 using (Stream fs = MainActivity.assets.Open("torrc"))
                 {
@@ -160,7 +171,7 @@ namespace MaskSurfPro.Droid
                 }
 
                 TorrcDest.Close();
-            }
+           // }
 
             Java.IO.File torrcfile = new Java.IO.File(folder + "/torrc");
             result = torrcfile.SetReadable(true);

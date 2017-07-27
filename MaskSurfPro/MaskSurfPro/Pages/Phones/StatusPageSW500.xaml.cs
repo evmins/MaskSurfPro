@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using MaskSurfPro.ViewModels;
+using MaskSurfPro.Resources;
 
 namespace MaskSurfPro.Pages
 {
@@ -14,6 +15,10 @@ namespace MaskSurfPro.Pages
         public StatusPageSW500()
         {
             InitializeComponent();
+
+            BindingContext = MSProApp.Locator.StatusVM;
+            MSProApp.Locator.StatusVM.CurrentPage = this;
+
             SetWaitingState();
             TrueIPDesc.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
             TrueIP.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
@@ -26,33 +31,16 @@ namespace MaskSurfPro.Pages
             MessagingCenter.Subscribe<StatusPage>(this, "BootstrappFinished", (sender) =>
             {
                 RemoveWaitingState();
-                StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
+                StatusViewModel svm = MSProApp.Locator.StatusVM;
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     TrueIP.Text = svm.GetTrueIP();
                 });
             });
-            MessagingCenter.Subscribe<StatusPage>(this, "RegionsChanged", (sender) =>
-            {
-                StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    SelectedRegions.ItemsSource = svm.SelectedRegionsList;
-                });
-            });
-            MessagingCenter.Subscribe<StatusPage>(this, "NewLoadMessage", (sender) =>
-            {
-
-                StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    //NetworkLog.ItemsSource = svm.NetworkMessages;
-                });
-            });
             MessagingCenter.Subscribe<StatusPage>(this, "FalseIPChanged", (sender) =>
             {
 
-                StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
+                StatusViewModel svm = MSProApp.Locator.StatusVM;
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     FalseIPList.ItemsSource = svm.FalseIPsList;
@@ -65,7 +53,7 @@ namespace MaskSurfPro.Pages
         {
             base.OnAppearing();
 
-            StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
+            StatusViewModel svm = MSProApp.Locator.StatusVM;
             svm.GetActiveConnection();
             if (svm.ActiveConnection != null)
             {
@@ -83,7 +71,7 @@ namespace MaskSurfPro.Pages
 
         void Refresh(object sender, EventArgs e)
         {
-            StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
+            StatusViewModel svm = MSProApp.Locator.StatusVM;
             svm.GetActiveConnection();
             if (svm.ActiveConnection != null)
             {
@@ -94,31 +82,8 @@ namespace MaskSurfPro.Pages
             ActiveConStatus.DetailColor = svm.ConnStatusColor;
             ConnectionStatusDescription.Text = svm.ConnectionStatusDescriptionText;
         }
-        void GoToTorLogNav(object sender, EventArgs e)
-        {
-            TorLogPageSW500 tPage = (TorLogPageSW500)((MSProApp)Application.Current).TorLogVM.CurrentPage;
-            Element el = tPage.Parent;
-            Application.Current.MainPage.Navigation.PushAsync(tPage);
-        }
-        void GoToCountriesNav(object sender, EventArgs e)
-        {
-            CountriesPageSW500 cPage = (CountriesPageSW500)((MSProApp)Application.Current).CountriesVM.CurrentPage;
-            Application.Current.MainPage.Navigation.PushAsync(cPage);
-        }
-        void GoToSettingsNav(object sender, EventArgs e)
-        {
-            SettingsPage sPage = (SettingsPage)((MSProApp)Application.Current).SettingsVM.CurrentPage;
-            Application.Current.MainPage.Navigation.PushAsync(sPage);
-        }
-        void GoToAboutNav(object sender, EventArgs e)
-        {
-            AboutPage aPage = (AboutPage)((MSProApp)Application.Current).AboutVM.CurrentPage;
-            Application.Current.MainPage.Navigation.PushAsync(aPage);
-        }
         void SetWaitingState()
         {
-            GoToCountries.IsEnabled = false;
-            GoToSettings.IsEnabled = false;
             TestIPBtn.IsEnabled = false;
             ResetAllBtn.IsEnabled = false;
 
@@ -128,8 +93,6 @@ namespace MaskSurfPro.Pages
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                GoToCountries.IsEnabled = true;
-                GoToSettings.IsEnabled = true;
                 TestIPBtn.IsEnabled = true;
                 ResetAllBtn.IsEnabled = true;
 
@@ -138,25 +101,25 @@ namespace MaskSurfPro.Pages
         }
         async void ResetAll(object sender, EventArgs e)
         {
-            bool answer = await DisplayAlert("Mask Surf Pro", Translation.GetString("Reset all confirmation"), Translation.GetString("Yes"), Translation.GetString("No"));
+            bool answer = await DisplayAlert("Mask Surf Pro", AppStrings.ResetAllConfirmation, AppStrings.Yes, AppStrings.No);
             if (answer == false)
             {
                 return;
             }
 
-            StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
+            StatusViewModel svm = MSProApp.Locator.StatusVM;
             svm.ResetSettings();
             SelectedRegions.ItemsSource = svm.SelectedRegionsList;
 
-            await DisplayAlert("Mask Surf Pro", Translation.GetString("Settings were reset"), Translation.GetString("OK"));
+            await DisplayAlert("Mask Surf Pro", AppStrings.SettingsWereReset, AppStrings.OK);
         }
         void TestIP(object sender, EventArgs e)
         {
-            StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
+            StatusViewModel svm = MSProApp.Locator.StatusVM;
             if (svm.ActiveConnection.IsSafe == false)
             {
-                string message = Translation.GetString("Traffic not anonymized") + " " + Translation.GetString("Set proxy first");
-                DisplayAlert(Translation.GetString("Warning"), message, Translation.GetString("OK"));
+                string message = AppStrings.TrafficNotAnonymized + " " + AppStrings.SetProxyFirst;
+                DisplayAlert(AppStrings.Warning, message, AppStrings.OK);
             }
 
             svm.TestIP();

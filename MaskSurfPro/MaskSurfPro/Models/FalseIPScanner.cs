@@ -39,6 +39,7 @@ namespace MaskSurfPro.Models
     public interface IGetUrl
     {
         string GetUrl();
-        string PostToUrl(string IPsToSend);
+        string PostToUrlCities(string IPsToSend);
+        string PostToUrlCountries(string IPsToSend);
     }
 }

@@ -121,26 +121,6 @@ namespace MaskSurfPro.Droid
             }
             PolipoConfDest.Close();
 
-            //DBs
-            /*
-            folder = @"/data/data/com.thanksoft.masksurfpro/databases/";
-            if (!Directory.Exists(folder))
-            {
-                Directory.CreateDirectory(folder);
-            }
-            */
-            path = @"/data/data/com.thanksoft.masksurfpro/databases/languages.db";
-            if (System.IO.File.Exists(path))
-            {
-                System.IO.File.Delete(path);
-            }
-            FileStream LanguagesDBDest = System.IO.File.Create(path);
-            using (Stream fs = Assets.Open("languages.db"))
-            {
-                fs.CopyTo(LanguagesDBDest);
-            }
-            LanguagesDBDest.Close();
-
             //settings
             Settings.Remove("Tor port");
             Settings.Remove("Tor control port");

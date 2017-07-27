@@ -14,13 +14,17 @@ namespace MaskSurfPro.Pages
         public TorLogPageSW300()
         {
             InitializeComponent();
+
+            BindingContext = MSProApp.Locator.TorLogVM;
+           // MSProApp.Locator.TorLogVM.CurrentPage = (TorLogPage)this;
+
             TorLogLabel.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
             ClearLogBtn.FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Button));
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            TorLogViewModel tvm = ((MSProApp)Application.Current).TorLogVM;
+            TorLogViewModel tvm = MSProApp.Locator.TorLogVM;
             if (tvm != null && TorLogListView.ItemsSource != tvm.TorLog)
             {
                 TorLogListView.ItemsSource = tvm.TorLog;
@@ -30,8 +34,7 @@ namespace MaskSurfPro.Pages
         }
         void ClearLog(object sender, EventArgs e)
         {
-            TorLogViewModel tvm = ((MSProApp)Application.Current).TorLogVM;
-            tvm.TorLog.Clear();
+            MSProApp.Locator.TorLogVM.ClearLog();
         }
     }
 }

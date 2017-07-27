@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
+
+using MaskSurfPro.Resources;
 
 namespace MaskSurfPro.ViewModels
 {
-    public class SettingsViewModel : FreshMvvm.FreshBasePageModel
+    public class SettingsViewModel : ViewModelBase
     {
         public int TorPort;
         public int TorControlPort;
@@ -140,12 +143,12 @@ namespace MaskSurfPro.ViewModels
         }
         public void Translate()
         {
-            PortsTitleText = Translation.GetString("Ports");
-            TorPortLabelText = Translation.GetString("Tor listening port");
-            TorComPortText = Translation.GetString("Tor control port");
-            PolipoPortText = Translation.GetString("Polipo listening port");
-            ApplySettingsBtnText = Translation.GetString("Apply");
-            CancelSettingsBtnText = Translation.GetString("Cancel");
+            PortsTitleText = AppStrings.Ports;
+            TorPortLabelText = AppStrings.TorListeningPort;
+            TorComPortText = AppStrings.TorControlPort;
+            PolipoPortText = AppStrings.PolipoListeningPort;
+            ApplySettingsBtnText = AppStrings.Apply;
+            CancelSettingsBtnText = AppStrings.Cancel;
         }
     }
 }

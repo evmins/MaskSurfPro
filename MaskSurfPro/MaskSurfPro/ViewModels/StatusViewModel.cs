@@ -6,18 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using GalaSoft.MvvmLight;
+
 using MaskSurfPro.Models;
 using MaskSurfPro.Pages;
+using MaskSurfPro.Resources;
 
 namespace MaskSurfPro.ViewModels
 {
-    public class StatusViewModel : FreshMvvm.FreshBasePageModel
+    public class StatusViewModel : ViewModelBase
     {
+        public StatusPage CurrentPage { get; set; }
+        public bool IsLoaded { get; set; }
+
         public ConnectionDetails ActiveConnection;
         public  List<IP> FalseIPs;
         private ObservableCollection<string> falseIPsList; //to display
         public ObservableCollection<string> NetworkMessages;
-        public FreshMvvm.FreshTabbedNavigationContainer TipsTabs;
+        public TabbedPage TipsTabs;
 
         private ObservableCollection<string> selectedRegionsList;
 
@@ -31,8 +37,10 @@ namespace MaskSurfPro.ViewModels
             {
                 if (selectedRegionsList != value)
                 {
-                    selectedRegionsList = value;
-                    MessagingCenter.Send<StatusPage>((StatusPage)CurrentPage, "RegionsChanged");
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        selectedRegionsList = value;
+                    });
                 }
             } 
         }
@@ -45,11 +53,13 @@ namespace MaskSurfPro.ViewModels
             }
             set
             {
-                //if (falseIPsList != value)
-                //{
-                    falseIPsList = value;
-                    MessagingCenter.Send<StatusPage>((StatusPage)CurrentPage, "FalseIPChanged");
-                //}
+                if (falseIPsList != value)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        falseIPsList = value;
+                    });
+                }
             }
         }
 
@@ -74,12 +84,22 @@ namespace MaskSurfPro.ViewModels
         public string ResetAllLabelText { get; set; }
         public string StartWaitMessageText { get; set; }
         public string TestIPText { get; set; }
+        public string WarningLabel { get; set; }
+        public string OKLabel { get; set; }
+        public string Anonymous { get; set; }
+        public string NotAnonymous { get; set; }
+        public string NotLicensed { get; set; }
+        public string GooglePlayNotAvailable { get; set; }
 
         public StatusViewModel()
         {
             falseIPsList = new ObservableCollection<string>();
             NetworkMessages = new ObservableCollection<string>();
             selectedRegionsList = new ObservableCollection<string>();
+            IsLoaded = false;
+            Translate();
+            ConnStatusColor = Color.Default;
+
 
             MessagingCenter.Subscribe<StatusViewModel>(this, "IPsScaned", (sender) =>
             {
@@ -103,14 +123,6 @@ namespace MaskSurfPro.ViewModels
                 FalseIPsList = Temp;
                 MessagingCenter.Send<StatusPage>((StatusPage)CurrentPage, "FalseIPChanged");
             });
-            MessagingCenter.Subscribe<StatusViewModel>(this, "RegionsCanceled", (sender) =>
-            {
-                SelectedRegionsList = new ObservableCollection<string>();
-            });
-            MessagingCenter.Subscribe<StatusViewModel,ObservableCollection<string>>(this, "RegionsChanged", (sender, arg) =>
-            {
-                SelectedRegionsList = arg;
-            });
             MessagingCenter.Subscribe<StatusViewModel, string>(this, "NewLoadMessage", (sender, arg) =>
             {
                 if (arg.CompareTo(String.Empty) != 0 && NetworkMessages.IndexOf(arg)==-1)
@@ -123,35 +135,34 @@ namespace MaskSurfPro.ViewModels
                             NetworkMessages.RemoveAt(0);
                         }
                     });
-                    MessagingCenter.Send<StatusPage>((StatusPage)CurrentPage, "NewLoadMessage");
                 }
             });
         }
-        public override void Init(object initData)
-        {
-            base.Init(initData);
-            Translate();
-            ConnStatusColor = Color.Default;
-        }
         void Translate()
         {
-            TrueIPDescription = Translation.GetString("Your true IP is");
-            FalseIPDesc = Translation.GetString("Your false IP is");
-            ActiveConnectionTitle = Translation.GetString("Active connection");
-            ActiveConnectionName = Translation.GetString("Name");
-            ActiveConnectionProxy = Translation.GetString("Proxy");
-            ActiveConnectionStatus = Translation.GetString("Status");
-            RefreshButtonText = Translation.GetString("Refresh");
-            GoToCountriesText = Translation.GetString("Countries");
-            GoToTorLogText = Translation.GetString("Tor log");
-            GoToSettingsText = Translation.GetString("Settings");
-            GoToAboutText = Translation.GetString("About");
-            RegionsLabelText = Translation.GetString("Selected regions");
-            ResetAllBtnText = Translation.GetString("Reset all");
-            ResetAllLabelText = Translation.GetString("Reset all description");
-            StartWaitMessageText = Translation.GetString("Start wait message");
-            TestIPText = Translation.GetString("Test IP");
-            NetworkStatusTitleText = Translation.GetString("Anonymous network status");
+            TrueIPDescription = AppStrings.TrueIPLabel;
+            FalseIPDesc = AppStrings.FalseIPLabel;
+            ActiveConnectionTitle = AppStrings.ActiveConnection;
+            ActiveConnectionName = AppStrings.Name;
+            ActiveConnectionProxy = AppStrings.Proxy;
+            ActiveConnectionStatus = AppStrings.Status;
+            RefreshButtonText = AppStrings.Refresh;
+            GoToCountriesText = AppStrings.Countries;
+            GoToTorLogText = AppStrings.TorLog;
+            GoToSettingsText = AppStrings.Settings;
+            GoToAboutText = AppStrings.About;
+            RegionsLabelText = AppStrings.SelectedRegions;
+            ResetAllBtnText = AppStrings.ResetAllLabel;
+            ResetAllLabelText = AppStrings.ResetAllDescription;
+            StartWaitMessageText = AppStrings.StartWaitMessage;
+            TestIPText = AppStrings.TestIP;
+            NetworkStatusTitleText = AppStrings.AnonymousNetworkStatus;
+            WarningLabel = AppStrings.Warning;
+            OKLabel = AppStrings.OK;
+            Anonymous = AppStrings.Anonymous;
+            NotAnonymous = AppStrings.NotAnonymous;
+            NotLicensed = AppStrings.NotLicensed;
+            GooglePlayNotAvailable = AppStrings.GooglePlayNotAvailable;
         }
         public void LoadSettings()
         {
@@ -168,20 +179,19 @@ namespace MaskSurfPro.ViewModels
 
             if (ActiveConnection == null)
             {
-                ConnectionStatusDescriptionText = Translation.GetString("No active connection");
+                ConnectionStatusDescriptionText = AppStrings.NoActiveConnection;
             }
             else
             {
-
                 if (ActiveConnection.IsSafe)
                 {
                     ConnStatusColor = Color.Green;
-                    ConnectionStatusDescriptionText = Translation.GetString("Traffic anonymized");
+                    ConnectionStatusDescriptionText = AppStrings.TrafficAnonymized;
                 }
                 else
                 {
                     ConnStatusColor = Color.Red;
-                    ConnectionStatusDescriptionText = Translation.GetString("Traffic not anonymized").Replace("8000", Settings.GetInt("Polipo port", 8000).ToString());
+                    ConnectionStatusDescriptionText = AppStrings.TrafficNotAnonymized.Replace("8000", Settings.GetInt("Polipo port", 8000).ToString());
                 }
             }
         }
@@ -199,10 +209,13 @@ namespace MaskSurfPro.ViewModels
         public void ResetSettings()
         {
             DependencyService.Get<IResetSettings>().ResetAll();
-            MessagingCenter.Send<CountriesPage>((CountriesPage)((MSProApp)MSProApp.Current).CountriesVM.CurrentPage, "CountriesCanceled");
-            MessagingCenter.Send<CitiesPage>((CitiesPage)((MSProApp)MSProApp.Current).CitiesVM.CurrentPage, "CitiesCanceled");
             selectedRegionsList.Clear();
-            MessagingCenter.Send<StatusPage>((StatusPage)CurrentPage, "RegionsChanged");
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                MSProApp.Locator.CountriesVM.CancelSelectedCountriesList();
+                MSProApp.Locator.CitiesVM.CancelSelectedCitiesList();
+                SelectedRegionsList.Clear();
+            });
         }
         public void TestIP()
         {
@@ -210,9 +223,9 @@ namespace MaskSurfPro.ViewModels
         }
         public void ShowTips()
         {
-            TipsTabs = new FreshMvvm.FreshTabbedNavigationContainer("TipsNavPage");
-            TipsTabs.AddTab<ProxyTipsWifiViewModel>("Wifi", null);
-            TipsTabs.AddTab<ProxyTipsAPNViewModel>("Mobile", null);
+            TipsTabs = new TabbedPage();
+            TipsTabs.Children.Add(new ProxyTipsWifiPage());
+            TipsTabs.Children.Add(new ProxyTipsAPNPage());
         }
     }
     public interface IResetSettings

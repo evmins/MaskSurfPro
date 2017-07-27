@@ -18,21 +18,14 @@ using LicenseVerificationLibrary;
 using LicenseVerificationLibrary.Obfuscator;
 using LicenseVerificationLibrary.Policy;
 
-[assembly: Xamarin.Forms.Dependency(typeof(MaskSurfPro.Droid.DisplaySizeOnAndroid))]
 
 namespace MaskSurfPro.Droid
 {
-    [Activity(Label = "Mask Surf Pro", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Mask Surf Pro", Theme = "@style/MainTheme", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity, ILicenseCheckerCallback
     {
-        //Google Play app specific values removed
-
-        public static Resources Res { get; private set;}
+        public static Android.Content.Res.Resources Res { get; private set;}
         public static AssetManager assets { get; private set; }
-        public string DBFilePath
-        {
-            get; private set;
-        }
         public string DBDirPath
         {
             get; private set;
@@ -42,26 +35,14 @@ namespace MaskSurfPro.Droid
         {
             base.OnCreate(bundle);
 
-            DBDirPath = Android.App.Application.Context.GetDatabasePath("a").AbsolutePath;
-            DBDirPath = DBDirPath.Remove(DBDirPath.Length - 1);
-            DBFilePath = Android.App.Application.Context.GetDatabasePath("languages.db").AbsolutePath;
-            CheckLangsDB();
-            //AndroidUtils.Res = Resources;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             Res = Resources;
             assets = this.Assets;
-            if (Device.Idiom == TargetIdiom.Phone)
-            {
-                RequestedOrientation = ScreenOrientation.SensorPortrait;
-            }
-            if (Device.Idiom == TargetIdiom.Tablet)
-            {
-                RequestedOrientation = ScreenOrientation.SensorLandscape;
-            }
-
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new MSProApp());
 
-            //CheckLicense();
+            CheckLicense();
 
             AndroidUtils.activity = this;
             try
@@ -76,36 +57,24 @@ namespace MaskSurfPro.Droid
             AndroidUtils.CopyBinaries();
 
             AndroidUtils.StartTor();
+
         }
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception e = (Exception)args.ExceptionObject;
+            string str = e.Message;
+        }
+        
         protected override void OnStart()
         {
             base.OnStart();
-
+            
             MessagingCenter.Subscribe<MainActivity>(this, "FalseIPScannerStart", (sender) =>
             {
                 StartService(new Intent(this, typeof(FalseIPScannerOnAndroidService)));
                 //binder.GetService().Start();
             });
-        }
-        protected void CheckLangsDB()
-        {
-            //DBs
-            System.String path = DBFilePath;
-
-            if (!System.IO.Directory.Exists(DBDirPath))
-            {
-                System.IO.Directory.CreateDirectory(DBDirPath);
-            }
-        //    if (!System.IO.File.Exists(DBFilePath))
-         //   {
-
-                FileStream LanguagesDBDest = System.IO.File.Create(DBFilePath);
-                using (Stream fs = Assets.Open("languages.db"))
-                {
-                    fs.CopyTo(LanguagesDBDest);
-                }
-                LanguagesDBDest.Close();
-           // }
+            
         }
         private void CheckLicense()
         {
@@ -138,7 +107,7 @@ namespace MaskSurfPro.Droid
             alert.SetTitle("Mask Surf Pro");
             alert.SetMessage(message);
             alert.SetCancelable(false);
-            alert.SetPositiveButton(Translation.GetString("OK"), (senderAlert, args) => {
+            alert.SetPositiveButton(AppStrings.OK, (senderAlert, args) => {
             });
 
             Dialog dialog = alert.Create();
@@ -147,13 +116,14 @@ namespace MaskSurfPro.Droid
         }
         public void DontAllow(PolicyServerResponse reason)
         {
-            string message = Translation.GetString("You application is not licensed");
+            string message = MSProApp.Locator.StatusVM.NotLicensed;
 
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.SetTitle(Translation.GetString("Warning"));
+            
+            alert.SetTitle(MSProApp.Locator.StatusVM.WarningLabel);
             alert.SetMessage(message);
             alert.SetCancelable(false);
-            alert.SetPositiveButton(Translation.GetString("OK"), (senderAlert, args) => 
+            alert.SetPositiveButton(MSProApp.Locator.StatusVM.OKLabel, (senderAlert, args) => 
             {
                 if (AndroidUtils.TorProc != null)
                 {
@@ -172,13 +142,13 @@ namespace MaskSurfPro.Droid
         }
         public void ApplicationError(CallbackErrorCode errorCode)
         {
-            string message = Translation.GetString("Can't obtain license information from Google Play");
+            string message = MSProApp.Locator.StatusVM.GooglePlayNotAvailable;
 
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.SetTitle(Translation.GetString("Warning"));
+            alert.SetTitle(MSProApp.Locator.StatusVM.WarningLabel);
             alert.SetMessage(message);
             alert.SetCancelable(false);
-            alert.SetPositiveButton(Translation.GetString("OK"), (senderAlert, args) => 
+            alert.SetPositiveButton(MSProApp.Locator.StatusVM.OKLabel, (senderAlert, args) => 
             {
                 Finish();
                 if (AndroidUtils.TorProc != null)
@@ -197,39 +167,6 @@ namespace MaskSurfPro.Droid
         }
 
     }
-    public class DisplaySizeOnAndroid : IDisplaySize
-    {
-        public DisplaySizeOnAndroid()
-        {
-        }
 
-        public int GetWidth()
-        {
-            DisplayMetrics metrics = MainActivity.Res.DisplayMetrics;
-            return metrics.WidthPixels;
-        }
-        public int GetHeight()
-        {
-            DisplayMetrics metrics = MainActivity.Res.DisplayMetrics;
-            return metrics.HeightPixels;
-        }
-        public int GetWidthDiP()
-        {
-            DisplayMetrics metrics = MainActivity.Res.DisplayMetrics;
-            int dp = (int)((metrics.WidthPixels) / metrics.Density);
-            return dp;
-        }
-        public int GetHeightDiP()
-        {
-            DisplayMetrics metrics = MainActivity.Res.DisplayMetrics;
-            int dp = (int)((metrics.HeightPixels) / metrics.Density);
-            return dp;
-        }
-        public float GetDensity()
-        {
-            DisplayMetrics metrics = MainActivity.Res.DisplayMetrics;
-            return metrics.Density;
-        }
-    }
 }
 

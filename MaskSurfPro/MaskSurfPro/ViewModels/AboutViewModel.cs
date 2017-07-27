@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
+using MaskSurfPro.Resources;
 
 using Xamarin.Forms;
 
 namespace MaskSurfPro.ViewModels
 {
-    public class AboutViewModel : FreshMvvm.FreshBasePageModel
+    public class AboutViewModel : ViewModelBase
     {
         //translation properties
         public string VersionLabelText { get; set; }
@@ -20,20 +22,16 @@ namespace MaskSurfPro.ViewModels
 
         public AboutViewModel()
         {
-        }
-
-        public override void Init(object initData)
-        {
-            base.Init(initData);
             Translate();
         }
+
         public void Translate()
         {
-            VersionLabelText = "Mask Surf Pro " + Translation.GetString("version") + " " + ((MSProApp)MSProApp.Current).Version;
-            Device.OnPlatform(Android: () => SystemDescLabelText = Translation.GetString("AndroidNotes"));
-            SNLabelText = Translation.GetString("Mask Surf on social networks");
-            DisclaimerLabelText = Translation.GetString("The Tor Project disclaimer");
-            DisclaimerText = Translation.GetString("Disclaimer");
+            VersionLabelText = "Mask Surf Pro " + AppStrings.version + " " + ((MSProApp)MSProApp.Current).Version;
+            SystemDescLabelText = AppStrings.AndroidNotes;
+            SNLabelText = AppStrings.MaskSurfOnSocialNetworks;
+            DisclaimerLabelText = AppStrings.TheTorProjectDisclaimer;
+            DisclaimerText = AppStrings.Disclaimer;
             CopyrightLabelText = "© " + DateTime.Now.Year + " Thanksoft";
         }
     }

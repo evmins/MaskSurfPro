@@ -11,12 +11,11 @@
       <ColumnDefinition Width="3*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
+      <RowDefinition Height="5*" />
+      <RowDefinition Height="5*" />
+      <RowDefinition Height="11*" />
       <RowDefinition Height="*" />
-      <RowDefinition Height="2*" />
-      <RowDefinition Height="9*" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="*" />
+      <RowDefinition Height="7*" />
     </Grid.RowDefinitions>
     <Grid Padding="10">
       <Grid.ColumnDefinitions>
@@ -31,24 +30,24 @@
     <Button Grid.Row="1" x:Name="GetCitiesListBtn" Clicked="GetCitiesList" Text="{Binding GetCitiesListBtnText}" />
     <Label Grid.Row="2" x:Name="WaitLabel" Text="{Binding WaitLabelText}" IsVisible="False" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
     <ListView Grid.Row="2" x:Name="CitiesToSelect" />
-    <Label Grid.Row="4" Text="{Binding TotalCitiesLabelText}" x:Name="TotalCitiesLabel" HorizontalOptions="Center" VerticalOptions="Center" />
-    <Label Grid.Row="5" Text="{Binding TotalUnknownCitiesLabelText}" x:Name="TotalUnknownCitiesLabel" HorizontalOptions="Center" VerticalOptions="Center" />
-    <Label Grid.Row="6" Text="{Binding TotalExitRelaysLabelText}" x:Name="TotalExitRelaysLabel" HorizontalOptions="Center" VerticalOptions="Center" />
+    <StackLayout Grid.Row="4">
+    <Label  Text="{Binding TotalCitiesLabelText}" x:Name="TotalCitiesLabel" HorizontalOptions="Start" VerticalOptions="Center" />
+    <Label Text="{Binding TotalUnknownCitiesLabelText}" x:Name="TotalUnknownCitiesLabel" HorizontalOptions="Start" VerticalOptions="Center" />
+    <Label Text="{Binding TotalExitRelaysLabelText}" x:Name="TotalExitRelaysLabel" HorizontalOptions="Start" VerticalOptions="Center" />
+    </StackLayout>
     <StackLayout x:Name="RightGrid" Grid.Column="2" Grid.Row="1" Grid.RowSpan="4" Orientation="Vertical">
       <Label Text="{Binding SelectedCitiesLabelText}" x:Name="SelectedCitiesLabel" />
       <ListView x:Name="SelectedCities" />
-      <StackLayout Orientation="Horizontal">
+      <StackLayout Orientation="Vertical">
         <Button x:Name="ApplySelectedCities" Text="{Binding ApplySelectedCitiesText}" HorizontalOptions="Center" VerticalOptions="Center" Clicked="ApplyCitiesList" />
         <Button x:Name="CancelSelectedCities" Text="{Binding CancelSelectedCitiesText}" HorizontalOptions="Center" VerticalOptions="Center" Clicked="CancelCitiesList" />
       </StackLayout>
     </StackLayout>
     <Grid Grid.Row="2" Grid.RowSpan="3" Grid.Column="1">
       <Grid.RowDefinitions>
+        <RowDefinition Height="2*" />
         <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
+        <RowDefinition Height="2*" />
       </Grid.RowDefinitions>
       <Button Grid.Row="0" x:Name="AddCityBtn"  Clicked="AddSelectedCity" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding AddCityBtnText}" />
       <Button Grid.Row="2" x:Name="RemoveCityBtn" Clicked="RemoveSelectedCity" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding RemoveCityBtnText}" />

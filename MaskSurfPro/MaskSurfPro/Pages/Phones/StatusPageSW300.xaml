@@ -4,13 +4,11 @@
              xmlns:f="clr-namespace:FreshMvvm;assembly=FreshMvvm"
              xmlns:local="clr-namespace:MaskSurfPro.Pages;assembly=MaskSurfPro"
              x:Class="MaskSurfPro.Pages.StatusPageSW300">
-  <Grid>
+  <Grid Margin="10,10,10,0">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="14*" />
       <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="24*" />
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="10*" />
+      <ColumnDefinition Width="34*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height="2*" />
@@ -27,15 +25,7 @@
           </TableSection>
         </TableRoot>
       </TableView>
-    <Grid Grid.Column="2" x:Name="Logo">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="4*" />
-        <RowDefinition Height="7*" />
-      </Grid.RowDefinitions>
-      <Label x:Name="ProgramName" Text="Mask Surf Pro" VerticalOptions="Start" HorizontalOptions="Center" />
-      <Image x:Name="MSPLogo" Grid.Row="1" />
-    </Grid>
-    <Grid Grid.Column="2" Grid.Row="1" Grid.RowSpan="2">
+    <Grid Grid.Column="2" Grid.RowSpan="2">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="*" />
@@ -47,24 +37,12 @@
       </StackLayout>
       <ListView Grid.Column="1" x:Name="FalseIPList" Header="{Binding FalseIPDesc}" HasUnevenRows="True" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand" />
     </Grid>
-    <Grid x:Name="Nav" Grid.Column="4" Grid.RowSpan="2" Padding="10">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
-      </Grid.RowDefinitions>
-      <Button x:Name="GoToCountries" Text="{Binding GoToCountriesText}"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToCountriesNav" />
-      <Button x:Name="GoToTorLog" Text="{Binding GoToTorLogText}" Grid.Row="1"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToTorLogNav" />
-      <Button x:Name="GoToSettings" Text="{Binding GoToSettingsText}" Grid.Row="2" VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToSettingsNav" />
-      <Button x:Name="GoToAbout" Text="{Binding GoToAboutText}" Grid.Row="3"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToAboutNav" />
-    </Grid>
-    <StackLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Horizontal" Padding="10">
+    <StackLayout Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal" Padding="10">
       <StackLayout Orientation="Horizontal">
         <Button  x:Name="RefreshActiveConnection" Text="{Binding RefreshButtonText}" VerticalOptions="Center" HorizontalOptions="Center" Clicked="Refresh" />
-        <Button x:Name="ShowTipsBtn" Text="?" VerticalOptions="Center" HorizontalOptions="Center" Clicked="ShowTips" />
+        <Button x:Name="ShowTipsBtn" Text="?" WidthRequest="50" VerticalOptions="Center" HorizontalOptions="Center" Clicked="ShowTips" />
       </StackLayout>
-      <Label x:Name="ConnectionStatusDescription" VerticalOptions="End" HorizontalOptions="Center" />
+      <Label x:Name="ConnectionStatusDescription" VerticalOptions="End" HorizontalOptions="Start" Margin="30,0,0,0" />
     </StackLayout>
   </Grid>
 </local:StatusPage>

@@ -35,7 +35,7 @@
     <StackLayout x:Name="RightGrid" Grid.Column="2" Grid.Row="1" Grid.RowSpan="4" Orientation="Vertical">
       <Label Text="{Binding SelectedCountriesLabelText}" x:Name="SelectedCountriesLabel" />
       <ListView x:Name="SelectedCountries" HorizontalOptions="Center" VerticalOptions="Center" />
-      <StackLayout Orientation="Horizontal">
+      <StackLayout Orientation="Vertical">
         <Button x:Name="ApplySelectedCountries" Text="{Binding ApplySelectedCountriesText}" HorizontalOptions="Center" VerticalOptions="Start" Clicked="ApplyCountriesList" />
         <Button x:Name="CancelSelectedCountries" Text="{Binding CancelSelectedCountriesText}" HorizontalOptions="Center" VerticalOptions="Start" Clicked="CancelCountriesList" />
       </StackLayout>

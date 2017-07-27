@@ -59,22 +59,9 @@
     <StackLayout Grid.Row="1" Grid.Column="2" Orientation="Vertical" VerticalOptions="CenterAndExpand">
       <ListView x:Name="NetworkLog" ItemsSource="{Binding NetworkMessages}" Header="{Binding NetworkStatusTitleText}" />
     </StackLayout>
-    <StackLayout Grid.Row="2" Grid.Column="2" Orientation="Vertical" VerticalOptions="CenterAndExpand">
+    <StackLayout Grid.Row="1" Grid.Column="4" Orientation="Vertical" VerticalOptions="CenterAndExpand">
       <ListView x:Name="SelectedRegions" ItemsSource="{Binding selectedRegionsList}" Header="{Binding RegionsLabelText}" HorizontalOptions="Start" VerticalOptions="Center" />
     </StackLayout>
-    <Grid x:Name="Nav" Grid.Column="4" Grid.RowSpan="2" Padding="20">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
-      </Grid.RowDefinitions>
-      <Button x:Name="GoToCountries" Text="{Binding GoToCountriesText}"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToCountriesNav" />
-      <Button x:Name="GoToTorLog" Text="{Binding GoToTorLogText}" Grid.Row="1"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToTorLogNav" />
-      <Button x:Name="GoToSettings" Text="{Binding GoToSettingsText}" Grid.Row="2" VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToSettingsNav" />
-      <Button x:Name="GoToAbout" Text="{Binding GoToAboutText}" Grid.Row="3"  VerticalOptions="Center" HorizontalOptions="End" Clicked="GoToAboutNav" />
-    </Grid>
     <StackLayout Grid.Row="2" Grid.Column="4" Orientation="Vertical" VerticalOptions="End">
       <Button x:Name="ResetAllBtn" Text="{Binding ResetAllBtnText}"  VerticalOptions="Start" HorizontalOptions="Center" Clicked="ResetAll" />
       <Label x:Name="ResetAllLabel" Text="{Binding ResetAllLabelText}" VerticalOptions="Center" HorizontalOptions="Center" />

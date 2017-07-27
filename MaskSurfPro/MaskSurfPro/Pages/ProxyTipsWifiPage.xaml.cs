@@ -15,6 +15,8 @@ namespace MaskSurfPro.Pages
         {
             InitializeComponent();
 
+            BindingContext = MSProApp.Locator.ProxyTipsWifiVM;
+
             WifiImage1.Source = ImageSource.FromResource("MaskSurfPro.images.wifitip.png");
             WifiHeading.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
             WifiTip1.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
@@ -29,7 +31,7 @@ namespace MaskSurfPro.Pages
         {
             base.OnAppearing();
 
-            ProxyTipsWifiViewModel ptwfvm = ((MSProApp)Application.Current).PTWFVM;
+            ProxyTipsWifiViewModel ptwfvm = MSProApp.Locator.ProxyTipsWifiVM;
 
             WifiHeading.Text = ptwfvm.WifiHeadingText;
             WifiTip1.Text = ptwfvm.WifiTip1Text;

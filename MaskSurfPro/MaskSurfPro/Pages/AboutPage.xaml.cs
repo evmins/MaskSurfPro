@@ -15,6 +15,8 @@ namespace MaskSurfPro.Pages
         {
             InitializeComponent();
 
+            BindingContext = MSProApp.Locator.AboutVM;
+
             VersionLabel.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
             SNLabel.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
             DisclaimerLabel.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
@@ -24,7 +26,6 @@ namespace MaskSurfPro.Pages
 
             FBLogo.Source = ImageSource.FromResource("MaskSurfPro.images.fblogo.png");
             GPLogo.Source = ImageSource.FromResource("MaskSurfPro.images.gplogo.png");
-            VKLogo.Source = ImageSource.FromResource("MaskSurfPro.images.vklogo.png");
 
             TapGestureRecognizer tapGestureRecognizer1 = new TapGestureRecognizer();
             tapGestureRecognizer1.Tapped += (s, e) => 
@@ -39,19 +40,12 @@ namespace MaskSurfPro.Pages
                 Device.OpenUri(new Uri("https://plus.google.com/112133005781438523926"));
             };
             GPLogo.GestureRecognizers.Add(tapGestureRecognizer2);
-
-            TapGestureRecognizer tapGestureRecognizer3 = new TapGestureRecognizer();
-            tapGestureRecognizer3.Tapped += (s, e) => 
-            {
-                Device.OpenUri(new Uri("https://vk.com/masksurf"));
-            };
-            VKLogo.GestureRecognizers.Add(tapGestureRecognizer3);
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            AboutViewModel avm = ((MSProApp)Application.Current).AboutVM;
+            AboutViewModel avm = MSProApp.Locator.AboutVM;
 
             VersionLabel.Text = avm.VersionLabelText;
             SystemDescLabel.Text = avm.SystemDescLabelText;

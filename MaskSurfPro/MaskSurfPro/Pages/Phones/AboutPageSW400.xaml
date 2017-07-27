@@ -4,6 +4,7 @@
              xmlns:f="clr-namespace:FreshMvvm;assembly=FreshMvvm"
              xmlns:local="clr-namespace:MaskSurfPro.Pages;assembly=MaskSurfPro"
              x:Class="MaskSurfPro.Pages.AboutPageSW400">
+  <ScrollView>
   <StackLayout Orientation="Vertical" Padding="10">
     <Label x:Name="VersionLabel" Text="{Binding VersionLabelText}" VerticalOptions="Center" HorizontalOptions="Start" FontAttributes="Bold" />
     <Label x:Name="SystemDescLabel" Text="{Binding SystemDescLabelText}" VerticalOptions="Center" HorizontalOptions="Start" />
@@ -11,11 +12,10 @@
     <StackLayout Orientation="Horizontal" Spacing="20">
       <Image x:Name="FBLogo" WidthRequest="64" HeightRequest="64" />
       <Image x:Name="GPLogo" WidthRequest="64" HeightRequest="64" />
-      <Image x:Name="VKLogo" WidthRequest="64" HeightRequest="64" />
     </StackLayout>
     <Label x:Name="DisclaimerLabel" Text="{Binding DisclaimerLabelText}" VerticalOptions="Center" HorizontalOptions="Start" />
     <Label x:Name="DisclaimerText" Text="{Binding DisclaimerText}" VerticalOptions="Start" HorizontalOptions="Start" />
-
     <Label x:Name="CopyrightLabel" Text="{Binding CopyrightLabelText}" VerticalOptions="End" HorizontalOptions="Start" />
   </StackLayout>
+  </ScrollView>
 </f:FreshBaseContentPage>

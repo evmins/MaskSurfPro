@@ -5,13 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
+using GalaSoft.MvvmLight;
 using MaskSurfPro.Models;
 using MaskSurfPro.Pages;
+using MaskSurfPro.Resources;
 
 namespace MaskSurfPro.ViewModels
 {
-    public class CitiesViewModel : FreshMvvm.FreshBasePageModel
+    public class CitiesViewModel : ViewModelBase
     {
+        public CitiesPage CurrentPage { get; set; }
+
         //all countries lists
         List<string> ExitNamesList = new List<string>();
         public  List<string> ExitIPsList = new List<string>();
@@ -48,19 +52,9 @@ namespace MaskSurfPro.ViewModels
         public CitiesViewModel()
         {
             selectedCitiesList = new ObservableCollection<string>();
-            MessagingCenter.Subscribe<StatusViewModel>(this, "CitiesCanceled", (sender) =>
-            {
-                selectedCitiesList.Clear();
-                MessagingCenter.Send<CitiesPage>((CitiesPage)CurrentPage, "CitiesChanged");
-            });
-        }
-
-        public override void Init(object initData)
-        {
-            base.Init(initData);
-
             Translate();
         }
+
         public void LoadSettings()
         {
             if (Settings.GetStringCollection("Selected cities list") != null)
@@ -70,21 +64,16 @@ namespace MaskSurfPro.ViewModels
         }
         public async Task GetCitiesListThread()
         {
-            await Task.Run(() =>
-            {
-                //code removed
-            });
-
+            //code removed
         }
         public bool ApplySelectedCitiesList()
         {
             if (SelectedCitiesList.Count <= 0)
             {
-                //GetTranslation("Cities are not selected", "Messages"));
                 return false;
             }
 
-            //remove previous country's nodes
+            //удаление серверов предыдущей страны
             StringBuilder strConfig = new StringBuilder();
             StringBuilder ExcludedCodesResult = new StringBuilder();
             int nStart;
@@ -191,23 +180,14 @@ namespace MaskSurfPro.ViewModels
                 bResult = Tor.SendSimpleSignal("SIGNAL NEWNYM\r\n");
             });
 
-            StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
-            /*
-            if (svm != null)
+            StatusViewModel svm = MSProApp.Locator.StatusVM;
+            CountriesViewModel cvm = MSProApp.Locator.CountriesVM;
+
+            Device.BeginInvokeOnMainThread(() =>
             {
                 svm.SelectedRegionsList = SelectedCitiesList;
-            }
-            */
-            if (svm != null)
-            {
-                MessagingCenter.Send<StatusViewModel, ObservableCollection<string>>(svm, "RegionsChanged", SelectedCitiesList);
-            }
-            CountriesViewModel cvm = ((MSProApp)Application.Current).CountriesVM;
-            if (cvm != null)
-            {
-                MessagingCenter.Send<CountriesViewModel>(cvm, "CountriesCanceled");
-            }
-            MessagingCenter.Send<CitiesPage>((CitiesPage)CurrentPage, "CitiesChanged");
+                cvm.SelectedCountriesList.Clear();
+            });
 
             Settings.SetStringCollection("Selected cities list", SelectedCitiesList);
             Settings.SetStringCollection("Selected regions list", SelectedCitiesList);
@@ -256,19 +236,15 @@ namespace MaskSurfPro.ViewModels
             Settings.Remove("Selected cities list");
             Settings.Remove("Selected regions list");
 
-            SelectedCitiesList.Clear();
-            MessagingCenter.Send<CitiesPage>((CitiesPage)CurrentPage, "CitiesChanged");
-            StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
-            if (svm != null)
+            CountriesViewModel cvm = MSProApp.Locator.CountriesVM;
+            StatusViewModel svm = MSProApp.Locator.StatusVM;
+
+            Device.BeginInvokeOnMainThread(() =>
             {
-                MessagingCenter.Send<StatusViewModel>(svm, "RegionsCanceled");
-            }
-            CountriesViewModel cvm = ((MSProApp)Application.Current).CountriesVM;
-            if (cvm != null)
-            {
-                //cvm.SelectedCitiesList.Clear();
-                MessagingCenter.Send<CountriesViewModel>(cvm, "CountriesCanceled");
-            }
+                cvm.SelectedCountriesList.Clear();
+                svm.SelectedRegionsList.Clear();
+                SelectedCitiesList.Clear();
+            });
             /*
             StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
             if (svm != null)
@@ -293,24 +269,20 @@ namespace MaskSurfPro.ViewModels
         {
             selectedCitiesList.Remove(NewCountry);
         }
-        public string GetCountryFromDB(string IP)
-        {
-            return DependencyService.Get<ISQLite>().Query(IP);
-        }
         void Translate()
         {
-            SelectedCountriesModeLabelText = Translation.GetString("Countries");
-            SelectedCitiesModeLabelText = Translation.GetString("Cities");
-            GetCitiesListBtnText = Translation.GetString("Get cities list");
-            TotalCitiesLabelText = Translation.GetString("Total cities");
-            TotalUnknownLocationsLabelText = Translation.GetString("Total unknown locations");
-            TotalExitRelaysLabelText = Translation.GetString("Total exit relays");
-            SelectedCitiesLabelText = Translation.GetString("Selected cities");
-            ApplySelectedCitiesText = Translation.GetString("Apply list");
-            CancelSelectedCitiesText = Translation.GetString("Cancel list");
-            AddCityBtnText = Translation.GetString("Add");
-            RemoveCityBtnText = Translation.GetString("Remove");
-            WaitLabelText = Translation.GetString("Download wait message");
+            SelectedCountriesModeLabelText = AppStrings.Countries;
+            SelectedCitiesModeLabelText = AppStrings.Cities;
+            GetCitiesListBtnText = AppStrings.GetCitiesList;
+            TotalCitiesLabelText = AppStrings.TotalCities;
+            TotalUnknownLocationsLabelText = AppStrings.TotalUnknownLocations;
+            TotalExitRelaysLabelText = AppStrings.TotalExitRelays;
+            SelectedCitiesLabelText = AppStrings.SelectedCities;
+            ApplySelectedCitiesText = AppStrings.ApplyList;
+            CancelSelectedCitiesText = AppStrings.CancelList;
+            AddCityBtnText = AppStrings.Add;
+            RemoveCityBtnText = AppStrings.Remove;
+            WaitLabelText = AppStrings.DownloadWaitMessage;
         }
     }
     public struct City
