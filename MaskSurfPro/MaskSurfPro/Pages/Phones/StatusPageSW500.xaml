@@ -50,7 +50,7 @@
       <Label x:Name="LoadingMessage" Grid.Row="2" Text="{Binding StartWaitMessageText}" FontAttributes="Bold" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Center" />
     </Grid>
       <StackLayout Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Padding="10" Orientation="Vertical" VerticalOptions="CenterAndExpand">
-        <ListView x:Name="NetworkLog" ItemsSource="{Binding NetworkMessages}" Header="{Binding NetworkStatusTitleText}" />
+        <ListView x:Name="NetworkLog" ItemsSource="{Binding NetworkMessages}" Header="{Binding NetworkStatusTitleText}" ItemSelected="OnSelection" />
       </StackLayout>
     <StackLayout Grid.Column="4" Orientation="Vertical" VerticalOptions="StartAndExpand">
       <Label x:Name="TrueIPDesc" Text="{Binding TrueIPDescription}" />

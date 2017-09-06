@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -24,6 +23,8 @@ namespace MaskSurfPro.Droid
     [Activity(Label = "Mask Surf Pro", Theme = "@style/MainTheme", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity, ILicenseCheckerCallback
     {
+        private LicenseChecker checker;
+
         public static Android.Content.Res.Resources Res { get; private set;}
         public static AssetManager assets { get; private set; }
         public string DBDirPath
@@ -39,30 +40,32 @@ namespace MaskSurfPro.Droid
 
             Res = Resources;
             assets = this.Assets;
+
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new MSProApp());
 
-            CheckLicense();
+                CheckLicense();
 
-            AndroidUtils.activity = this;
-            try
-            {
-                SettingsOnAndroid.PrefManager = Android.App.Application.Context.GetSharedPreferences("Mask Surf Pro", 0);
-            }
-            catch (Exception ex)
-            {
-                string str = ex.Message;
-            }
+                AndroidUtils.activity = this;
+                try
+                {
+                    SettingsOnAndroid.PrefManager = Android.App.Application.Context.GetSharedPreferences("Mask Surf Pro", 0);
+                }
+                catch (Exception ex)
+                {
+                    string str = ex.Message;
+                }
 
-            AndroidUtils.CopyBinaries();
+                AndroidUtils.CopyBinaries();
 
-            AndroidUtils.StartTor();
+                AndroidUtils.StartTor();
 
         }
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
             Exception e = (Exception)args.ExceptionObject;
             string str = e.Message;
+            System.Diagnostics.Debug.WriteLine(str);
         }
         
         protected override void OnStart()

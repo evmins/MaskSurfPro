@@ -21,13 +21,13 @@ namespace MaskSurfPro.ViewModels
         //all countries lists
         List<string> ExitListNames = new List<string>();
         List<string> ExitListIPs = new List<string>();
-        public CountriesList WorkCountriesList = new CountriesList();
-        CountriesList ExitCountriesList = new CountriesList();
+        public ObservableRangeCollection<Country> WorkCountriesList = new ObservableRangeCollection<Country>();
+        ObservableRangeCollection<Country> ExitCountriesList = new ObservableRangeCollection<Country>();
         public List<string> ExitCountries = new List<string>();
         string AllCountriesCodes;
 
         //selected countries list
-        public ObservableCollection<string> SelectedCountriesList;
+        public ObservableRangeCollection<string> SelectedCountriesList;
        /* public ObservableCollection<string> SelectedCountriesList
         {
             get { return selectedCountriesList; }
@@ -56,14 +56,14 @@ namespace MaskSurfPro.ViewModels
 
         public CountriesViewModel()
         {
-            SelectedCountriesList = new ObservableCollection<string>();
+            SelectedCountriesList = new ObservableRangeCollection<string>();
             Translate();
         }
         public void LoadSettings()
         {
             if (Settings.GetStringCollection("Selected countries list") != null)
             {
-                SelectedCountriesList = new ObservableCollection<string>(Settings.GetStringCollection("Selected countries list"));
+                SelectedCountriesList = new ObservableRangeCollection<string>(Settings.GetStringCollection("Selected countries list"));
             }
         }
         public async Task GetCountiesListThread()
@@ -111,6 +111,8 @@ namespace MaskSurfPro.ViewModels
             }
 
             StringBuilder strNewExitCountriesEntry = new StringBuilder();
+            //if (rbtnListModeInclude.IsChecked == true)
+            //{
             for (int i = 0; i < SelectedCountriesList.Count; i++)
             {
                 strNewExitCountriesEntry.Append("{");
@@ -118,6 +120,24 @@ namespace MaskSurfPro.ViewModels
                 strNewExitCountriesEntry.Append("},");
             }
             strNewExitCountriesEntry.Remove(strNewExitCountriesEntry.Length - 1, 1);
+            //}
+            /*
+            if (rbtnListModeExclude.IsChecked == true)
+            {
+                strNewExitCountriesEntry.Append(AllCountriesCodes.ToUpper());
+                strNewExitCountriesEntry.Append(",");
+                StringBuilder CodeToRemove = new StringBuilder();
+                for (int i = 0; i < lbSelectedCountries.Items.Count; i++)
+                {
+                    CodeToRemove.Clear();
+                    CodeToRemove.Append("{");
+                    CodeToRemove.Append(Tor.CountryToCode(lbSelectedCountries.Items.GetItemAt(i).ToString()));
+                    CodeToRemove.Append("},");
+                    strNewExitCountriesEntry.Replace(CodeToRemove.ToString(), "");
+                }
+                strNewExitCountriesEntry.Remove(strNewExitCountriesEntry.Length - 1, 1);
+            }
+            */
 
             //write country codes
             if (!String.IsNullOrEmpty(strNewExitCountriesEntry.ToString()))
@@ -146,12 +166,17 @@ namespace MaskSurfPro.ViewModels
             CitiesViewModel civm = MSProApp.Locator.CitiesVM;
             Device.BeginInvokeOnMainThread(() =>
             {
-                svm.SelectedRegionsList = new ObservableCollection<string>(SelectedCountriesList);
-                civm.SelectedCitiesList.Clear();
+                svm.SelectedRegionsList.ReplaceRange(SelectedCountriesList);
+                if (civm.SelectedCitiesList.Count > 0)
+                {
+                    civm.SelectedCitiesList.Clear();
+                }
             });
 
             Settings.SetStringCollection("Selected countries list", SelectedCountriesList);
+            Settings.Remove("Selected cities list");
             Settings.SetStringCollection("Selected regions list", SelectedCountriesList);
+            //var test=Settings.GetStringCollection("Selected cities list");
 
             return true;
         }
@@ -194,7 +219,7 @@ namespace MaskSurfPro.ViewModels
                 });
             }
             Settings.Remove("Selected countries list");
-            Settings.Remove("Selected cites list");
+            Settings.Remove("Selected cities list");
             Settings.Remove("Selected regions list");
 
             StatusViewModel svm = MSProApp.Locator.StatusVM;
@@ -202,9 +227,18 @@ namespace MaskSurfPro.ViewModels
 
             Device.BeginInvokeOnMainThread(() =>
             {
-                SelectedCountriesList.Clear();
-                svm.SelectedRegionsList.Clear();
-                civm.SelectedCitiesList.Clear();
+                if (SelectedCountriesList.Count > 0)
+                {
+                    SelectedCountriesList.Clear();
+                }
+                if (svm.SelectedRegionsList.Count > 0)
+                {
+                    svm.SelectedRegionsList.Clear();
+                }
+                if (civm.SelectedCitiesList.Count > 0)
+                {
+                    civm.SelectedCitiesList.Clear();
+                }
             });
         }
         public void AddSelectedCountry(string NewCountry)

@@ -113,7 +113,7 @@ namespace MaskSurfPro.Pages
             CitiesViewModel civm = MSProApp.Locator.CitiesVM;
             if (svm != null)
             {
-                svm.SelectedRegionsList = new System.Collections.ObjectModel.ObservableCollection<string>();
+                svm.SelectedRegionsList.Clear();
             }
             if (civm != null)
             {

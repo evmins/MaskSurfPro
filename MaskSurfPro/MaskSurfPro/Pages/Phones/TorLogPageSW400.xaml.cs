@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using MaskSurfPro.ViewModels;
+using MaskSurfPro.Resources;
 
 namespace MaskSurfPro.Pages
 {
@@ -30,6 +31,15 @@ namespace MaskSurfPro.Pages
             }
             TorLogLabel.Text = tvm.TorLogLabelText;
             ClearLogBtn.Text = tvm.ClearLogBtnText;
+        }
+        void OnSelection(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null)
+            {
+                return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
+            }
+            DisplayAlert(AppStrings.Message, e.SelectedItem.ToString(), AppStrings.OK);
+            ((ListView)sender).SelectedItem = null;
         }
         void ClearLog(object sender, EventArgs e)
         {

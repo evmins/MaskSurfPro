@@ -10,7 +10,7 @@
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
     <Label x:Name="TorLogLabel" Text="{Binding TorLogLabelText}" Margin="20,10,0,0" />
-    <ListView Grid.Row="1" x:Name="TorLogListView" />
+    <ListView Grid.Row="1" x:Name="TorLogListView" ItemSelected="OnSelection" />
     <Button x:Name="ClearLogBtn" Grid.Row="2" Clicked="ClearLog" Text="{Binding ClearLogBtnText}" HorizontalOptions="Center" VerticalOptions="Center" />
   </Grid>
 </f:FreshBaseContentPage>

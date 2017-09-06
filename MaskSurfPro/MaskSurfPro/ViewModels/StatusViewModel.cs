@@ -21,13 +21,13 @@ namespace MaskSurfPro.ViewModels
 
         public ConnectionDetails ActiveConnection;
         public  List<IP> FalseIPs;
-        private ObservableCollection<string> falseIPsList; //to display
-        public ObservableCollection<string> NetworkMessages;
+        private ObservableRangeCollection<string> falseIPsList; //to display
+        public ObservableRangeCollection<string> NetworkMessages;
         public TabbedPage TipsTabs;
 
-        private ObservableCollection<string> selectedRegionsList;
+        private ObservableRangeCollection<string> selectedRegionsList;
 
-        public ObservableCollection<string> SelectedRegionsList
+        public ObservableRangeCollection<string> SelectedRegionsList
         {
             get
             {
@@ -45,7 +45,7 @@ namespace MaskSurfPro.ViewModels
             } 
         }
 
-        public ObservableCollection<string> FalseIPsList
+        public ObservableRangeCollection<string> FalseIPsList
         {
             get
             {
@@ -93,9 +93,9 @@ namespace MaskSurfPro.ViewModels
 
         public StatusViewModel()
         {
-            falseIPsList = new ObservableCollection<string>();
-            NetworkMessages = new ObservableCollection<string>();
-            selectedRegionsList = new ObservableCollection<string>();
+            falseIPsList = new ObservableRangeCollection<string>();
+            NetworkMessages = new ObservableRangeCollection<string>();
+            selectedRegionsList = new ObservableRangeCollection<string>();
             IsLoaded = false;
             Translate();
             ConnStatusColor = Color.Default;
@@ -104,7 +104,7 @@ namespace MaskSurfPro.ViewModels
             MessagingCenter.Subscribe<StatusViewModel>(this, "IPsScaned", (sender) =>
             {
                 FalseIPs = FalseIPScanner.CurrentIPs;
-                ObservableCollection<string> Temp = new ObservableCollection<string>();
+                ObservableRangeCollection<string> Temp = new ObservableRangeCollection<string>();
                 foreach (IP curip in FalseIPs)
                 {
                     if (Temp.IndexOf(curip.IPAddress)==-1)
@@ -166,10 +166,9 @@ namespace MaskSurfPro.ViewModels
         }
         public void LoadSettings()
         {
-            ObservableCollection<string> EmptyCollection = new ObservableCollection<string>();
             if (Settings.GetStringCollection("Selected regions list") != null)
             {
-                SelectedRegionsList = new ObservableCollection<string>(Settings.GetStringCollection("Selected regions list"));
+                SelectedRegionsList = new ObservableRangeCollection<string>(Settings.GetStringCollection("Selected regions list"));
             }
         }
 

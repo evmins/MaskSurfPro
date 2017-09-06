@@ -70,9 +70,7 @@ namespace MaskSurfPro.Pages
             svm.LoadSettings();
             ActiveConStatus.DetailColor = svm.ConnStatusColor;
             ConnectionStatusDescription.Text = svm.ConnectionStatusDescriptionText;
-
-            //tune up
-
+            SelectedRegions.ItemsSource = svm.SelectedRegionsList;
         }
 
         void Refresh(object sender, EventArgs e)
@@ -136,25 +134,15 @@ namespace MaskSurfPro.Pages
         {
             Application.Current.MainPage.Navigation.PushAsync(((MSProApp)Application.Current).ProxyTips);
         }
-        /*
-        protected override void OnSizeAllocated(double width, double height)
+        void OnSelection(object sender, SelectedItemChangedEventArgs e)
         {
-            base.OnSizeAllocated(width, height);
-            bool res = DeviceInfo.IsOrientationPortrait();
-
-            if (width > height && MSProApp.Locator.StatusVM.IsLoaded == true)
+            if (e.SelectedItem == null)
             {
-                Tabs MainTabs = ((MSProApp)Application.Current).MainTabs;
-
-                var StatusPagePhoneL = new StatusPageSW400();
-                StatusPagePhoneL.Title = AppStrings.Status;
-                StatusPagePhoneL.DisplayPosition = DisplayPos.Landscape;
-                MainTabs.Children.RemoveAt(0);
-                MainTabs.Children.Insert(0, StatusPagePhoneL);
-                MainTabs.SelectedItem = StatusPagePhoneL;
+                return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
             }
+            DisplayAlert(AppStrings.Message, e.SelectedItem.ToString(), AppStrings.OK);
+            ((ListView)sender).SelectedItem = null;
         }
-        */
-        
+
     }
 }

@@ -19,9 +19,9 @@ namespace MaskSurfPro.ViewModels
         public string TorLogLabelText { get; set; }
         public string ClearLogBtnText { get; set; }
 
-        private ObservableCollection<string> torLog;
+        private ObservableRangeCollection<string> torLog;
         
-        public ObservableCollection<string> TorLog
+        public ObservableRangeCollection<string> TorLog
         {
             get { return torLog; }
         }
@@ -30,7 +30,7 @@ namespace MaskSurfPro.ViewModels
         public TorLogViewModel()
         {
             Translate();
-            torLog = new ObservableCollection<string>();
+            torLog = new ObservableRangeCollection<string>();
         }
         public void ClearLog()
         {

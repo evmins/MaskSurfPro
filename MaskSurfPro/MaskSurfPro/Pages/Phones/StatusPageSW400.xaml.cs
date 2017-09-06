@@ -128,24 +128,15 @@ namespace MaskSurfPro.Pages
         {
             Application.Current.MainPage.Navigation.PushAsync(((MSProApp)Application.Current).ProxyTips);
         }
-        /*
-        protected override void OnSizeAllocated(double width, double height)
+        void OnSelection(object sender, SelectedItemChangedEventArgs e)
         {
-            base.OnSizeAllocated(width, height);
-            bool res = DeviceInfo.IsOrientationPortrait();
-
-            if (width < height && MSProApp.Locator.StatusVM.IsLoaded == true)
+            if (e.SelectedItem == null)
             {
-                Tabs MainTabs = ((MSProApp)Application.Current).MainTabs;
-
-                var StatusPagePhoneP = new StatusPageSW400p();
-                StatusPagePhoneP.Title = AppStrings.Status;
-                StatusPagePhoneP.DisplayPosition = DisplayPos.Portrait;
-                MainTabs.Children[0] = StatusPagePhoneP;
-                MainTabs.SelectedItem = StatusPagePhoneP;
+                return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
             }
+            DisplayAlert(AppStrings.Message, e.SelectedItem.ToString(), AppStrings.OK);
+            ((ListView)sender).SelectedItem = null;
         }
-        */
     }
 }
 

@@ -1297,7 +1297,4 @@ namespace MaskSurfPro
         public string Name { get; set; }
         public uint Number { get; set; }
     }
-    public class CountriesList : ObservableCollection<Country>
-    {
-    }
 }

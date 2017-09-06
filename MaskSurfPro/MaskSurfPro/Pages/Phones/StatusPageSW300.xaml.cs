@@ -126,5 +126,14 @@ namespace MaskSurfPro.Pages
         {
             Application.Current.MainPage.Navigation.PushAsync(((MSProApp)Application.Current).ProxyTips);
         }
+        void OnSelection(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null)
+            {
+                return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
+            }
+            DisplayAlert(AppStrings.Message, e.SelectedItem.ToString(), AppStrings.OK);
+            ((ListView)sender).SelectedItem = null;
+        }
     }
 }

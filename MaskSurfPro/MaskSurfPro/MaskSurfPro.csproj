@@ -38,6 +38,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ObservableRangeCollection.cs" />
     <Compile Include="Models\FalseIPScanner.cs" />
     <Compile Include="Models\Tor.cs" />
     <Compile Include="Pages\AboutPage.xaml.cs">
@@ -175,6 +176,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

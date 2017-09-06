@@ -88,6 +88,8 @@ namespace MaskSurfPro
             //normal screens are at least 470dp x 320dp
             //small screens are at least 426dp x 320dp
 
+            MobileCenter.Start("android=7d19d3ff-dec3-42f0-80d7-3d5b74bc3593;", typeof(Analytics), typeof(Crashes));
+
             float dens = DependencyService.Get<IDisplaySize>().GetDensity();
             int wd = DependencyService.Get<IDisplaySize>().GetWidthDiP();
             int hd = DependencyService.Get<IDisplaySize>().GetHeightDiP();
@@ -247,7 +249,7 @@ namespace MaskSurfPro
                     }
                 }
             }
-            svm.FalseIPsList = Temp;
+            svm.FalseIPsList.ReplaceRange(Temp);
             MessagingCenter.Send<StatusPage>(MSProApp.Locator.StatusVM.CurrentPage, "FalseIPChanged");
         }
     }

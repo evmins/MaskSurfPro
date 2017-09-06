@@ -121,7 +121,7 @@ namespace MaskSurfPro.Pages
             CountriesViewModel cavm = MSProApp.Locator.CountriesVM;
             if (svm != null)
             {
-                svm.SelectedRegionsList = new System.Collections.ObjectModel.ObservableCollection<string>();
+                svm.SelectedRegionsList.Clear(); ;
             }
             if (cavm != null)
             {

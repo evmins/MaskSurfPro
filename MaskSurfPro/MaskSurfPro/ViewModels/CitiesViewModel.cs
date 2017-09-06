@@ -19,13 +19,11 @@ namespace MaskSurfPro.ViewModels
         //all countries lists
         List<string> ExitNamesList = new List<string>();
         public  List<string> ExitIPsList = new List<string>();
-        public CountriesList WorkCitiesList = new CountriesList();  //exit routers with c details
+        public ObservableCollection<City> WorkCitiesList = new ObservableCollection<City>(); 
         public ObservableCollection<City> AllCitiesList = new ObservableCollection<City>(); //exit routers with city details
         public List<string> ExitCities = new List<string>();
-        public int NotSpecifiedListNum
-        { get; set; }
-        public int TotalExitRouters
-        { get; set; }
+        public int NotSpecifiedListNum { get; set; }
+        public int TotalExitRouters { get; set; }
 
         //selected countries list
         private ObservableCollection<string> selectedCitiesList;
@@ -51,7 +49,7 @@ namespace MaskSurfPro.ViewModels
 
         public CitiesViewModel()
         {
-            selectedCitiesList = new ObservableCollection<string>();
+            selectedCitiesList = new ObservableRangeCollection<string>();
             Translate();
         }
 
@@ -59,7 +57,7 @@ namespace MaskSurfPro.ViewModels
         {
             if (Settings.GetStringCollection("Selected cities list") != null)
             {
-                selectedCitiesList = new ObservableCollection<string>(Settings.GetStringCollection("Selected cities list"));
+                selectedCitiesList = new ObservableRangeCollection<string>(Settings.GetStringCollection("Selected cities list"));
             }
         }
         public async Task GetCitiesListThread()
@@ -185,11 +183,15 @@ namespace MaskSurfPro.ViewModels
 
             Device.BeginInvokeOnMainThread(() =>
             {
-                svm.SelectedRegionsList = SelectedCitiesList;
-                cvm.SelectedCountriesList.Clear();
+                svm.SelectedRegionsList.ReplaceRange(SelectedCitiesList);
+                if (cvm.SelectedCountriesList.Count > 0)
+                {
+                    cvm.SelectedCountriesList.Clear();
+                }
             });
 
             Settings.SetStringCollection("Selected cities list", SelectedCitiesList);
+            Settings.Remove("Selected countries list");
             Settings.SetStringCollection("Selected regions list", SelectedCitiesList);
 
             return true;
@@ -241,9 +243,18 @@ namespace MaskSurfPro.ViewModels
 
             Device.BeginInvokeOnMainThread(() =>
             {
-                cvm.SelectedCountriesList.Clear();
-                svm.SelectedRegionsList.Clear();
-                SelectedCitiesList.Clear();
+                if (cvm.SelectedCountriesList.Count > 0)
+                {
+                    cvm.SelectedCountriesList.Clear();
+                }
+                if (svm.SelectedRegionsList.Count > 0)
+                {
+                    svm.SelectedRegionsList.Clear();
+                }
+                if (SelectedCitiesList.Count > 0)
+                {
+                    SelectedCitiesList.Clear();
+                }
             });
             /*
             StatusViewModel svm = ((MSProApp)Application.Current).StatusVM;
